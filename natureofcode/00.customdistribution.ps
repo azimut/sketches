@@ -1,0 +1,26 @@
+/x 450 def
+/y 600 def
+
+/stepsize 5 def
+/step {
+  rand 3 mod 1 sub
+  rand 100 mod 0 eq { % rare big steps - Levy Flight
+    stepsize 4 mul
+  } {
+    stepsize
+  } ifelse
+  mul
+} def
+
+120 srand
+
+/Times-Roman findfont 20 scalefont setfont
+newpath x y moveto
+
+9000 {
+  /x x step add def % movement on 8 possible directions
+  /y y step add def
+  x y moveto (?) show
+} repeat
+
+stroke

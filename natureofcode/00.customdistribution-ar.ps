@@ -1,0 +1,29 @@
+% Custom Distribution: accept-reject algorithm
+
+/x 750 def
+/y 100 def
+
+90 rotate
+
+/stepsize 5 def
+/flip { rand 2 mod 0 eq { 1 } { -1 } ifelse } def
+/step {
+  {
+    /a rand stepsize mod def
+    /b rand stepsize mod def
+    b a lt { a exit } if
+  } loop
+} def
+
+23 srand
+
+/Times-Roman findfont 10 scalefont setfont
+newpath x y moveto
+
+20000 {
+  /x x step add flip mul def
+  /y y step add flip mul def
+  x y moveto (?) show
+} repeat
+
+stroke
