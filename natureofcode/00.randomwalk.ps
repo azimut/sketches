@@ -1,0 +1,18 @@
+/x 300 def
+/y 650 def
+
+/Times-Roman findfont 15 scalefont setfont
+
+1101 srand
+% 301 srand
+
+19000 {
+  rand 4 mod {
+    dup 0 eq { /x x 5 add def exit } if
+    dup 1 eq { /x x 5 sub def exit } if
+    dup 2 eq { /y y 5 add def exit } if
+    dup 3 eq { /y y 5 sub def exit } if
+  } loop
+  x y moveto
+  (?) show
+} repeat
