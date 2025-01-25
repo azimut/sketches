@@ -1,0 +1,14 @@
+/coin { rand 3 mod -1 add 8 mul } def
+/x 250 def
+/y 350 def
+
+/Times-Roman findfont 15 scalefont setfont
+
+1101 srand
+
+6000 { % 8 directions walker
+  /x x coin add def
+  /y y coin add def
+  x y moveto
+  (?) show
+} repeat
