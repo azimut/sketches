@@ -1,0 +1,19 @@
+/Times-Roman findfont 15 scalefont setfont
+
+/x 300 def
+/y 650 def
+/step 2 def
+
+301 srand
+
+1000 {
+  rand 5 mod 10 div {
+    dup 0.15 lt { /x x step add def pop exit } if
+    dup 0.30 lt { /x x step sub def pop exit } if
+    dup 0.45 lt { /y y step sub def pop exit } if
+    dup 0.50 lt { /y y step add def pop exit } if
+    exit
+  } loop
+  x y moveto
+  (.) show
+} repeat
