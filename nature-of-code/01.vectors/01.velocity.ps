@@ -1,11 +1,11 @@
-/courier 20 selectfont 300 300 moveto
+/Courier 20 selectfont 300 300 moveto
 /width  585 def
 /height 842 def
 /x 500 def /y 300 def
 /xvel 0.7 def /yvel -9.8 def
 
 2000 {
-  x  width gt x 0 lt or { /xvel xvel -1 mul def } if
+  x width  gt x 0 lt or { /xvel xvel -1 mul def } if
   y height gt y 0 lt or { /yvel yvel -1 mul def } if
   /x x xvel add def
   /y y yvel add def
