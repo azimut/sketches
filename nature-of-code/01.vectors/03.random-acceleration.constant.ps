@@ -1,0 +1,36 @@
+/Courier 20 selectfont 300 300 moveto
+/width  552 def
+/height 810 def
+/currentx { currentpoint pop } def
+/currenty { currentpoint exch pop } def
+/randpos { rand width mod rand height mod } def
+/randflip { rand 2 mod 0 eq { 1 } { -1 } ifelse  } def
+
+/accx 0.01 def
+/accy -0.001  def
+
+/walker {
+  /xvel 0 def /yvel 0 def
+  randpos moveto
+  {
+    /xvel xvel accx add def
+    /yvel yvel accy add def
+    gsave (?) show grestore
+    currenty {
+      dup height gt { currentx 0 moveto pop exit } if
+      dup 0 lt { currentx height moveto pop exit } if
+      pop exit
+    } loop
+    currentx {
+      dup width gt { 0 currenty moveto pop exit } if
+      dup 0 lt { width currenty moveto pop exit } if
+      pop exit
+    } loop
+    xvel yvel rmoveto
+  } repeat
+} def
+
+983 srand
+20 {
+  500 walker
+} repeat

@@ -8,4 +8,4 @@ I won't develop a framework for this repo. I'll stick to the features the techst
 
 ## Postscript Notes
 
-- Missing features: normal distribution, noise functions (1D or 2D).
+- Missing features: normal distribution, noise functions (1D or 2D), vectors.
