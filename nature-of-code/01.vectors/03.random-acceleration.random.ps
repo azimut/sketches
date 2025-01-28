@@ -1,6 +1,6 @@
 /Courier 20 selectfont 300 300 moveto
-/width  552 def
-/height 810 def
+/width  580 def % 585
+/height 822 def % 842
 /currentx { currentpoint pop } def
 /currenty { currentpoint exch pop } def
 /randpos { rand width mod rand height mod } def
@@ -17,7 +17,7 @@
     gsave (?) show grestore
     currenty {
       dup height gt { currentx 0 moveto pop exit } if
-      dup 0 lt { currentx height moveto pop exit } if
+      dup 4 lt { currentx height moveto pop exit } if
       pop exit
     } loop
     currentx {
@@ -29,7 +29,7 @@
   } repeat
 } def
 
-983 srand
-100 {
-  23 walker
+23 srand
+44 {
+  rand 30 mod 15 add walker
 } repeat
