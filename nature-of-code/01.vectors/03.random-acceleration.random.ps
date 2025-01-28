@@ -8,10 +8,10 @@
 
 /walker {
   /xvel 0 def /yvel 0 def
-  /accx rand 512 mod 511 div randflip mul def
-  /accy rand 512 mod 511 div randflip mul def
   randpos moveto
   {
+    /accx rand 512 mod 511 div randflip mul rand 3 mod mul def
+    /accy rand 512 mod 511 div randflip mul rand 3 mod mul def
     /xvel xvel accx add def
     /yvel yvel accy add def
     gsave (?) show grestore
@@ -30,6 +30,6 @@
 } def
 
 983 srand
-600 {
-  10 walker
+100 {
+  23 walker
 } repeat
