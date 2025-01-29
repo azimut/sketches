@@ -4,7 +4,7 @@
 /currentx { currentpoint pop } def
 /currenty { currentpoint exch pop } def
 /randpos { rand width mod rand height mod } def
-/randflip { rand 2 mod 0 eq { 1 } { -1 } ifelse  } def
+/randneg { rand 2 mod 0 eq { 1 } { -1 } ifelse mul } def
 /square { dup mul } def
 /swap { exch } def
 /over { 1 index } def
@@ -24,7 +24,7 @@
   {
     /accx currentx centerx sub currenty centery sub normalize pop def
     % /accy currentx centerx sub currenty centery sub normalize swap pop def
-    /accy rand 512 mod 511 div randflip mul rand 3 mod mul def
+    /accy rand 512 mod 511 div randneg rand 3 mod mul def
     /xvel xvel accx add def
     /yvel yvel accy add def
     gsave (?) show grestore
@@ -45,7 +45,7 @@
 /centerx width  2 div cvi def /centery height 2 div cvi def
 % /centerx rand width mod def /centery rand height mod def
 
-23 srand
+301 srand
 49 {
   rand 30 mod 15 add walker
 } repeat
