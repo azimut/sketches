@@ -4,7 +4,10 @@ These are some visual sketches I made while learning about digital art.
 
 ## Examples
 
-![nature-of-code/01.vectors/03.random-acceleration.random.ps](imgs/noc1.png "random acceleration") ![nature-of-code/01.vectors/03.random-acceleration.attractor.ps](imgs/noc2.png "acceleration with repulsion")
+<p float="left" align="middle">
+  <img src="imgs/noc1.png" width="100" />
+  <img src="imgs/noc2.png" width="100" />
+</p>
 
 ## Restrictions
 
