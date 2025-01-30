@@ -5,8 +5,8 @@ These are some visual sketches I made while learning about digital art.
 ## Examples
 
 <p float="left" align="middle">
-  <img src="imgs/noc1.png" width="200" />
-  <img src="imgs/noc2.png" width="200" />
+  <img src="media/noc1.png" width="200" />
+  <img src="media/noc2.png" width="200" />
 </p>
 
 ## Restrictions
