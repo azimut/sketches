@@ -7,6 +7,7 @@ These are some visual sketches I made while learning about digital art.
 <p float="left" align="middle">
   <img src="media/noc1.png" width="200" />
   <img src="media/noc2.png" width="200" />
+  <img src="media/noc3.png" width="200" />
 </p>
 
 ## Restrictions
