@@ -9,6 +9,7 @@ These are some visual sketches I made while learning about digital art.
   <img src="media/noc2.png" width="200" />
   <img src="media/noc3.png" width="200" />
   <img src="media/noc4.png" width="200" />
+  <img src="media/noc5.gif" width="200" />
 </p>
 
 ## Restrictions
