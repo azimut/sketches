@@ -1,4 +1,4 @@
-FILES := noc1.png noc2.png noc3.png noc4.png noc5.gif
+FILES := noc1.png noc2.png noc3.png noc4.png noc5.gif psd-emperor.png
 
 .PHONY: all
 all: $(addprefix media/,$(FILES))
@@ -14,3 +14,6 @@ media/noc4.png: nature-of-code/02.force/02.mass.multiple.py
 	python3 $< $@
 media/noc5.gif: nature-of-code/02.force/03.mass.multiple.video.py
 	python3 $< $@
+
+media/psd-emperor.png: spirit-deck/the-emperor.ps
+	convert -density 400 -page a4 $< $@
