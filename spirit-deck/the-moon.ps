@@ -1,0 +1,60 @@
+%!PS
+%%BeginProlog
+/pagewidth  currentpagedevice /PageSize get 0 get def
+/pageheight currentpagedevice /PageSize get 1 get def
+/centerx pagewidth 2 div def
+/centery pageheight 2 div def
+/flip { 180 rotate pagewidth neg pageheight neg  translate } def
+/boxrounded {
+  5 dict begin
+    /hheight exch 2 div def
+    /hwidth  exch 2 div def
+    /R exch def
+    currentpoint /centery exch def /centerx exch def
+    gsave
+      setlinewidth
+      hwidth neg 0 rmoveto
+      centerx hwidth sub centery hheight add centerx centery hheight add R arct % U
+      centerx hwidth add centery hheight add centerx hwidth add centery R arct % R
+      centerx hwidth add centery hheight sub centerx centery hheight sub R arct % D
+      centerx hwidth sub centery hheight sub centerx hwidth sub centery R arct % L
+      closepath
+      stroke
+    grestore
+  end
+} def
+/boxhalfrounded {
+  5 dict begin
+    /hheight exch 2 div def
+    /hwidth  exch 2 div def
+    /R exch def
+    currentpoint /centery exch def /centerx exch def
+    gsave
+      setlinewidth
+      hwidth neg 0 rmoveto
+      centerx hwidth sub centery hheight add centerx centery hheight add R arct % U
+      centerx hwidth add centery hheight add centerx hwidth add centery R arct % R
+      centerx hwidth add centery hheight sub lineto
+      centerx hwidth sub centery hheight sub lineto
+      closepath
+      gsave setgray fill grestore
+      stroke
+    grestore
+  end
+} def
+/card {
+  /Times-Roman 50 selectfont
+  0.07 setgray 0 0 pagewidth pageheight rectfill % background
+  0.7 0.62 0.32 setrgbcolor
+       pagewidth 2 div pageheight 2 div moveto 2 20 500 750 boxrounded
+  flip pagewidth 2 div pageheight 0.899 mul    moveto 0.9 2 20 500 80 boxhalfrounded flip
+  0.07 setgray 170  70 moveto show % title
+  0.9  setgray 220 pageheight 0.88 mul moveto show % card number
+} def
+%%EndProlog
+
+(-XVIII-) (THE MOON) card
+newpath
+centerx centery translate
+0.90 setgray  0  0 170 0 360 arc fill stroke
+0.07 setgray 50 50 120 0 360 arc fill stroke
