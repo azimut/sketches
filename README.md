@@ -19,6 +19,7 @@ These are some visual sketches I made while learning about digital art.
 <p float="left" align="middle">
   <img src="media/psd-emperor.png" width="200" />
   <img src="media/psd-moon.png" width="200" />
+  <img src="media/psd-magician.png" width="200" />
 </p>
 
 ## Restrictions

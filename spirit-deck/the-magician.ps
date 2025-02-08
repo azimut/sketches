@@ -55,15 +55,16 @@
 
 (-I-) (THE MAGICIAN) card
 
-9 setlinewidth
-0.90 setgray
+/thick 12 def
+/gap 22 def
 
-/r1 65 def
 250 centery translate
-  r1 rotate
-  0.9 setgray 9 setlinewidth newpath 0 0 100 0 350 arc stroke
-  r1 neg rotate
-
-100 0 translate
-  245 rotate
-    0.9 setgray newpath 0 0 100 0 350 arc stroke
+  thick setlinewidth 0.9 setgray newpath 0 0 100 0 360 arc stroke
+  +100 0 translate
+    200 rotate
+      gap setlinewidth 0.07 setgray newpath 0 0 100 0 100 arc stroke
+    thick setlinewidth 0.9  setgray newpath 0 0 100 0 360 arc stroke
+   -200 rotate
+  -100 0 translate
+      gap setlinewidth 0.07 setgray newpath 0 0 100 0 100 arc stroke
+    thick setlinewidth 0.9  setgray newpath 0 0 100 0 200 arc stroke
