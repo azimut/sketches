@@ -1,0 +1,77 @@
+%!PS
+%%BeginProlog
+/pagewidth  currentpagedevice /PageSize get 0 get def
+/pageheight currentpagedevice /PageSize get 1 get def
+/centerx pagewidth 2 div def
+/centery pageheight 2 div def
+/flip { 180 rotate pagewidth neg pageheight neg  translate } def
+/boxhalfrounded {
+  5 dict begin
+    /hheight exch 2 div def
+    /hwidth  exch 2 div def
+    /R exch def
+    currentpoint /centery exch def /centerx exch def
+    newpath
+    centerx centery moveto
+    setlinewidth
+    hwidth neg 0 rmoveto
+    centerx hwidth sub centery hheight add centerx centery hheight add R arct % U
+    centerx hwidth add centery hheight add centerx hwidth add centery R arct % R
+    centerx hwidth add centery hheight sub lineto
+    centerx hwidth sub centery hheight sub lineto
+    closepath
+  end
+} def
+/showcentered { % stringwidth assumes every character is the same width...
+  dup stringwidth pop 2 div % sw/2
+  centerx exch sub 2 index sub % centerx - sw/2
+  currentpoint exch pop moveto show
+} def
+/card {
+  /Times-Roman 50 selectfont
+  /title exch def
+  /cardidx exch def
+  0.07 setgray 0 0 pagewidth pageheight rectfill % background
+  0.7 0.62 0.32 setrgbcolor
+  flip
+    pagewidth 2 div pageheight 0.899 mul moveto 0.9 2 20 500 80 boxhalfrounded
+    gsave 0.9 setgray fill grestore
+    stroke
+  flip
+  0.07 setgray 0 70 moveto 0 title showcentered
+  0.9  setgray 0 pageheight 0.88 mul moveto 10 cardidx showcentered
+  0.7 0.62 0.32 setrgbcolor centerx centery 39 add moveto 0.07 2 20 500 670 boxhalfrounded stroke
+                            centerx centery 39 add moveto 0.07 2 20 498 668 boxhalfrounded clip
+  newpath
+  0.9 setgray
+} def
+/placebox {
+  /height exch def
+  /width  exch def
+  currentpoint
+  height 2 div sub exch
+  width  2 div sub exch
+  width height
+} def
+%%EndProlog
+
+(-XVI-) (THE TOWER) card
+
+/lyoffset 150 def
+/ryoffset 200 def
+
+% \ white
+0.9 setgray 6 setlinewidth
+0 pageheight lyoffset sub moveto
+  pagewidth ryoffset lineto
+  stroke
+
+centerx centery moveto
+  150 300 placebox rectfill % □ white
+  150 300 placebox rectclip % □ clip
+
+% \ black
+0.07 setgray 6 setlinewidth
+0 pageheight lyoffset sub moveto
+  pagewidth ryoffset lineto
+  stroke
