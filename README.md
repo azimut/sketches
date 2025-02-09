@@ -20,6 +20,7 @@ These are some visual sketches I made while learning about digital art.
   <img src="media/psd-emperor.png" width="200" />
   <img src="media/psd-moon.png" width="200" />
   <img src="media/psd-magician.png" width="200" />
+  <img src="media/psd-hermit.png" width="200" />
 </p>
 
 ## Restrictions
@@ -29,6 +30,7 @@ These are some visual sketches I made while learning about digital art.
 ## Postscript Notes
 
 - Missing features: normal distribution, noise functions (1D or 2D), vectors.
+- line width grows outside of what the geomtry would fill
 
 ## References
 
