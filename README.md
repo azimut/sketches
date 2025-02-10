@@ -28,8 +28,9 @@ These are some visual sketches I made while learning about digital art.
 
 ## Postscript Notes
 
-- Missing features: normal distribution, noise functions (1D or 2D), vectors.
-- line width grows outside of what the geomtry would fill
+- Missing features: normal distribution, noise functions (1D or 2D), vectors and vector ops.
+- line width grows outside of what the geometry would fill
+- *stringwidth* assumes every character is the same width
 
 ## References
 
