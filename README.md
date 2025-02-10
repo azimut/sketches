@@ -9,7 +9,6 @@ These are some visual sketches I made while learning about digital art.
 <p float="left" align="middle">
   <img src="media/noc1.png" width="200" />
   <img src="media/noc2.png" width="200" />
-  <img src="media/noc3.png" width="200" />
   <img src="media/noc4.png" width="200" />
   <img src="media/noc5.gif" width="200" />
 </p>
@@ -17,8 +16,6 @@ These are some visual sketches I made while learning about digital art.
 ### PixelSpirit Deck
 
 <p float="left" align="middle">
-  <img src="media/psd-emperor.png" width="200" />
-  <img src="media/psd-moon.png" width="200" />
   <img src="media/psd-magician.png" width="200" />
   <img src="media/psd-hermit.png" width="200" />
   <img src="media/psd-tower.png" width="200" />
