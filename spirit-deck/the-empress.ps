@@ -58,6 +58,17 @@
       stroke
     grestore
   end } def
+/triangle {
+  2 dict begin /tside exch def /tangle exch def
+    gsave
+      2 1 scale
+      0 100 moveto
+      90 36 sub rotate tside neg 0 rlineto
+      90 36 sub neg rotate 72 2 div sin tside 2 mul mul 0 rlineto
+      closepath
+      fill
+    grestore
+  end } def
 
 (-III-) (THE EMPRESS) card
 
@@ -65,23 +76,11 @@
 centerx centery translate
 0 0 moveto 142 pentagon
 
-/tside 25 def
-/tangle 90 36 sub def
-1 setlinewidth
 5 {
-  gsave
   5 {
-    gsave
-    2 1 scale
-    0 100 moveto
-    90 36 sub rotate tside neg 0 rlineto
-    90 36 sub neg rotate 72 2 div sin tside 2 mul mul 0 rlineto
-    closepath
-    fill
-    grestore
+    90 36 sub 25 triangle
     72 rotate
   } repeat
-  grestore
   .75 dup scale
   36 rotate
 } repeat
