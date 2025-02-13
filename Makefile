@@ -1,4 +1,4 @@
-FILES := noc1.png noc2.png noc3.png noc4.png noc5.gif psd-emperor.png psd-moon.png psd-magician.png psd-hermit.png psd-tower.png psd-hierophant.png psd-empress.png psd-devil.png psd-world.png
+FILES := noc1.png noc2.png noc3.png noc4.png noc5.gif psd-emperor.png psd-moon.png psd-magician.png psd-hermit.png psd-tower.png psd-hierophant.png psd-empress.png psd-devil.png psd-world.png psd-sun.png
 
 .PHONY: all
 all: $(addprefix media/,$(FILES))
@@ -32,4 +32,6 @@ media/psd-empress.png: spirit-deck/the-empress.ps
 media/psd-devil.png: spirit-deck/the-devil.ps
 	convert -density 400 -page a4 $< $@
 media/psd-world.png: spirit-deck/the-world.ps
+	convert -density 400 -page a4 $< $@
+media/psd-sun.png: spirit-deck/the-sun.ps
 	convert -density 400 -page a4 $< $@

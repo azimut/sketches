@@ -16,7 +16,7 @@ These are some visual sketches I made while learning about digital art.
 ### PixelSpirit Deck
 
 <p float="left" align="middle">
-  <img src="media/psd-magician.png" width="200" />
+  <img src="media/psd-sun.png" width="200" />
   <img src="media/psd-world.png" width="200" />
   <img src="media/psd-hierophant.png" width="200" />
   <img src="media/psd-empress.png" width="200" />
