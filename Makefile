@@ -35,3 +35,6 @@ media/psd-world.png: spirit-deck/the-world.ps
 	convert -density 400 -page a4 $< $@
 media/psd-sun.png: spirit-deck/the-sun.ps
 	convert -density 400 -page a4 $< $@
+
+media/%.png: circuits/%.m4
+	cd circuits/ && make DESTDIR=$(shell readlink -f media)/ $(@F)
