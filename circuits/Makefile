@@ -6,7 +6,7 @@ MACROS := $(HOME)/projects/thirdparty/circuit_macros
 %.pdf: %.m4
 	m4 -I $(MACROS) $(MACROS)/pdf.m4 $< | dpic -d > $@
 %.png: %.pdf
-	convert -density 200 -transparent white $< $(DESTDIR)$@
+	convert -density 200 -background white -alpha off -alpha off $< $(DESTDIR)$@
 
 .PHONY: clean
 clean:; rm -vf ./*.pdf ./*.png
