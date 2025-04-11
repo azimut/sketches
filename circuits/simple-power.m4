@@ -12,10 +12,12 @@ R1: resistor(right_ dim); llabel(,22k);
 dot; line right_ dim; dot
 { R2: resistor(down_ dim); llabel(,22k) }
   R3: resistor(right_ dim); llabel(,22k)
-{ L1: line down dim }
-dot; capacitor; llabel(,1uf)
-corner; ground
-
+{ dot; capacitor(right_ dim); llabel(,1uf)
+  corner; ground }
+{   line down dim/2
+    dot; capacitor(right_ dim,C); llabel(,100uf); corner; ground
+L1: line down dim/2 from 2nd last []
+}
 #
 # OPAMP In1 leg
 #
