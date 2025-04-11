@@ -5,14 +5,15 @@ dim = 0.9
 #
 # Top Horizontal + components going down
 #
-ground
-R1: resistor(right_ dim)
-{ capacitor(down_ dim/2); ground }
-dot; line right_ dim
-{ R2: resistor(down_ dim) }
-  R3: resistor(right_ dim)
+corner(, at Here)
+ground;
+R1: resistor(right_ dim); llabel(,22k);
+{ capacitor(down_ dim/2, C); llabel(,10uf); ground(,T) }
+dot; line right_ dim; dot
+{ R2: resistor(down_ dim); llabel(,22k) }
+  R3: resistor(right_ dim); llabel(,22k)
 { L1: line down dim }
-dot; capacitor;
+dot; capacitor; llabel(,1uf)
 corner; ground
 
 #
@@ -20,9 +21,9 @@ corner; ground
 #
 OP: opamp(dim) with .E1 at L1.end
 line from OP.In1 to R2.end
-dot; capacitor(left_ dim);
+dot; capacitor(left_ dim); rlabel(,1Mf)
 dot; { line left dim/3; dot; rlabel(,"Vin") }
-resistor(down_ dim*0.75)
+resistor(down_ dim*0.75); llabel(,1M)
 ground(,T)
 
 line from OP.E2 down_ dim/4; ground(,T) # OPAMP E2 leg
@@ -32,17 +33,19 @@ line from OP.E2 down_ dim/4; ground(,T) # OPAMP E2 leg
 #
 line left_ dim/2 then down_ dim from OP.In2
 dot
-{ resistor(left_ dim); capacitor(left_ dim); ground } # <-
-R4: resistor(right_ dim)
+{ resistor(left_ dim); rlabel(,10k)
+  capacitor(left_ dim); rlabel(,10uf); corner
+  ground;} # <-
+R4: resistor(right_ dim); llabel(,200k)
 
 #
 # OPAMP output leg
 #
 line right (OP.e.x - R4.end.x) then up (OP.E.y - R4.y)
 dot
-capacitor(right_)
-SP: speaker(,dim/2)
-line from SP.In7 down
+capacitor(right_ dim, C); llabel(,2200uf)
+speaker(,dim/2); llabel(,928)
+line from last [] .In7 down
 ground(,T)
 
 .PE
