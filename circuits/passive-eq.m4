@@ -3,13 +3,13 @@
 # Passive Equalizer
 #
 cct_init
-dim = 0.9
+dim = 0.8
 
 #
 # Horizontal
 #
 dot; llabel("in"); line right dim/2
-C1: line dim; capacitor(dim); llabel(,102)
+C1: line dim/2; capacitor(dim); llabel(,102)
 R1: variable(resistor(dim)); llabel(,B100k,)
 C2: capacitor(dim); llabel(,102)
 corner; ground
@@ -27,9 +27,9 @@ ground
 # Horizontal 2
 #
 line <- right_ dim from R3
-R5: dot; resistor(dim); llabel(,10k); line dim/2
+R5: dot; resistor(dim); llabel(,10k);
 { line -> to R1 } # |
-C3: dot; capacitor(,C); llabel(,2.2)
+C3: dot; capacitor(,C); llabel(,\SI{2.2}{\micro\farad})
 R6:      variable(resistor); llabel(,A100k)
 corner; ground
 { line <- from R6.center down_ dim ; dot; rlabel(,,"out") } # |
