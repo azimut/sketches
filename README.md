@@ -7,9 +7,9 @@ These are some visual sketches I made while learning about digital art.
 ### Code of Nature
 
 <p float="left" align="middle">
-  <a href="media/noc5.gif"><img src="media/thumbs/noc1.png" width="200"/></a>
-  <a href="media/noc5.gif"><img src="media/thumbs/noc2.png" width="200"/></a>
-  <a href="media/noc5.gif"><img src="media/thumbs/noc4.png" width="200"/></a>
+  <a href="media/noc5.gif"><img src="media/thumbs/noc1.jpg" width="200"/></a>
+  <a href="media/noc5.gif"><img src="media/thumbs/noc2.jpg" width="200"/></a>
+  <a href="media/noc5.gif"><img src="media/thumbs/noc4.jpg" width="200"/></a>
   <a href="media/noc5.gif"><img src="media/noc5.gif" width="200"/></a>
 </p>
 
