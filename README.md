@@ -7,19 +7,26 @@ These are some visual sketches I made while learning about digital art.
 ### Code of Nature
 
 <p float="left" align="middle">
-  <img src="media/noc1.png" width="200" />
-  <img src="media/noc2.png" width="200" />
-  <img src="media/noc4.png" width="200" />
-  <img src="media/noc5.gif" width="200" />
+  <a href="media/noc5.gif"><img src="media/thumbs/noc1.png" width="200"/></a>
+  <a href="media/noc5.gif"><img src="media/thumbs/noc2.png" width="200"/></a>
+  <a href="media/noc5.gif"><img src="media/thumbs/noc4.png" width="200"/></a>
+  <a href="media/noc5.gif"><img src="media/noc5.gif" width="200"/></a>
 </p>
 
 ### PixelSpirit Deck
 
 <p float="left" align="middle">
-  <img src="media/psd-sun.png" width="200" />
-  <img src="media/psd-world.png" width="200" />
-  <img src="media/psd-hierophant.png" width="200" />
-  <img src="media/psd-empress.png" width="200" />
+  <a href="media/psd-sun.png"><img src="media/thumbs/psd-sun.jpg" width="200" /></a>
+  <a href="media/psd-world.png"><img src="media/thumbs/psd-world.jpg" width="200" /></a>
+  <a href="media/psd-hierophant.png"><img src="media/thumbs/psd-hierophant.jpg" width="200" /></a>
+  <a href="media/psd-empress.png"><img src="media/thumbs/psd-empress.jpg" width="200" /></a>
+</p>
+
+### ImageMagick
+
+<p float="left" align="middle">
+  <a href="media/swirly-bars.png"><img src="media/thumbs/swirly-bars.jpg" width="200" /></a>
+  <a href="media/swirly-checkers.png"><img src="media/thumbs/swirly-checkers.jpg" width="200" /></a>
 </p>
 
 ## Restrictions
