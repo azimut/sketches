@@ -5,3 +5,4 @@ define(`smoothstep',`(tt=clamp((($3)-($1))/(($2)-($1)));tt*tt*(3-(2*tt)))')dnl
 define(`length',`hypot($1,$2)')dnl
 define(`distance',`hypot(($1)-($3),($2)-($4))')dnl
 define(`dot',`(($1)*($3) + ($2)*($4))')dnl
+define(`init',`ii=((i*2)-w)/h; jj=((j*2)-h)/h')dnl
