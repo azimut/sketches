@@ -8,7 +8,6 @@ These are some visual sketches I made while learning about digital art.
 
 <p float="left" align="middle">
   <a href="media/noc5.gif"><img src="media/thumbs/noc1.jpg" width="200"/></a>
-  <a href="media/noc5.gif"><img src="media/thumbs/noc2.jpg" width="200"/></a>
   <a href="media/noc5.gif"><img src="media/thumbs/noc4.jpg" width="200"/></a>
   <a href="media/noc5.gif"><img src="media/noc5.gif" width="200"/></a>
 </p>
@@ -18,7 +17,6 @@ These are some visual sketches I made while learning about digital art.
 <p float="left" align="middle">
   <a href="media/psd-sun.png"><img src="media/thumbs/psd-sun.jpg" width="200" /></a>
   <a href="media/psd-world.png"><img src="media/thumbs/psd-world.jpg" width="200" /></a>
-  <a href="media/psd-hierophant.png"><img src="media/thumbs/psd-hierophant.jpg" width="200" /></a>
   <a href="media/psd-empress.png"><img src="media/thumbs/psd-empress.jpg" width="200" /></a>
 </p>
 
@@ -26,7 +24,8 @@ These are some visual sketches I made while learning about digital art.
 
 <p float="left" align="middle">
   <a href="media/swirly-bars.png"><img src="media/thumbs/swirly-bars.jpg" width="200" /></a>
-  <a href="media/swirly-checkers.png"><img src="media/thumbs/swirly-checkers.jpg" width="200" /></a>
+  <a href="media/swirly-bars.png"><img src="media/thumbs/swirly-bars.jpg" width="200" /></a>
+  <a href="media/m4spheres.sh.jpg"><img src="media/m4spheres.sh.jpg" width="200" /></a>
 </p>
 
 ## Restrictions
