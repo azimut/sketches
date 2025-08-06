@@ -1,3 +1,12 @@
-define(`length',`hypot($1,$2)')dnl
-define(`distance',`hypot(($1)-($3),($2)-($4))')dnl
-define(`smoothstep',`(st(9,clip((($3)-($1))/(($2)-($1)),0,255));(ld(9)*ld(9)*(3-(2*ld(9)))))')dnl
+divert(-1)
+define(`length',`hypot($1,$2)')
+define(`distance',`hypot(($1)-($3),($2)-($4))')
+define(`smoothstep',`(st(9,clip((($3)-($1))/(($2)-($1)),0,255));(ld(9)*ld(9)*(3-(2*ld(9)))))')
+define(`sign',`if(gt($1,0), 1, -1)')
+define(`TWOPI',`(2*PI)')
+define(`pluck',       `sin(TWOPI*($1)*($2))  * exp(-3*($2)) * 0.1')
+define(`square', `sign(sin(TWOPI*($1)*($2))) * exp(-3*($2)) * 0.1')
+define(`saw',    `(mod(($1)*($2),1) * 2 - 1) * exp(-3*($2)) * 0.1')
+define(`fmpluck',`fm($1,$2,1,1)              * exp(-3*($2)) * 0.1')
+define(`fm',     `sin(TWOPI*($1)*($2) + ($3) * sin(TWOPI*($1*$4)*($2)))')
+divert`'
