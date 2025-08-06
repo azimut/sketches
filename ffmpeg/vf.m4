@@ -8,5 +8,7 @@ define(`pluck',       `sin(TWOPI*($1)*($2))  * exp(-3*($2)) * 0.1')
 define(`square', `sign(sin(TWOPI*($1)*($2))) * exp(-3*($2)) * 0.1')
 define(`saw',    `(mod(($1)*($2),1) * 2 - 1) * exp(-3*($2)) * 0.1')
 define(`fmpluck',`fm($1,$2,1,1)              * exp(-3*($2)) * 0.1')
-define(`fm',     `sin(TWOPI*($1)*($2) + ($3) * sin(TWOPI*($1*$4)*($2)))')
+define(`fract', `(($1) - floor($1))')
+define(`fm',     `sin(TWOPI*fract(($1)*($2)) + (($3) * sin(TWOPI*fract($4*$2))))')
+define(`interval',`pow(2,($1)/12)')
 divert`'
