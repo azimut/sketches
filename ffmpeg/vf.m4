@@ -1,6 +1,7 @@
 divert(-1)
 define(`length',`hypot($1,$2)')
 define(`distance',`hypot(($1)-($3),($2)-($4))')
+define(`lerp',`(($1)+(($3)*(($2)-($1))))')
 define(`smoothstep',`(pow(clip((($3)-($1))/(($2)-($1)),0,1),2)
                       *(3-(2*clip((($3)-($1))/(($2)-($1)),0,1))))')
 define(`sign',`if(gt($1,0), 1, -1)')
