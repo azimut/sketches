@@ -6,8 +6,17 @@ VIDEO="${HOME}/Videos/music/Bosnian Rainbows - The Eye Fell In Love - 2012-09-12
 
 vf() { m4 ../vf.m4 - <<<"$1"; }
 
-$FFMPEG -y -ss 00:04:30 -t 40 -i "${VIDEO}" \
-    -lavfi "[0]crop=w='ih/(16/9)':x='(in_w-out_w)/2 + ((sin((t*.19)+PI/2+1)+1)*75+150)'" \
+$FFMPEG -y -ss 00:04:30 -t 25 -i "${VIDEO}" \
+    -lavfi "$(
+        vf "[0]
+        crop=
+           w='ih/(16/9)':
+           x='if(lt(t,6),
+                 iw/2,
+                 if(lt(t,10),
+                    iw/2 -       lerp(0,400,min(1,(t-6)/4)),
+                    iw/2 - 400 + lerp(0,450,min(1,(t-10)/3))) )'"
+    )" \
     -c:a copy \
     out.mp4
 
@@ -15,25 +24,18 @@ $FFMPEG -y -i out.mp4 -loop 1 -i foo.png \
     -lavfi "$(vf "
        [1:v]
            format=rgba,
-           scale=
-               w='if(lt(t,26.5),
-                     iw,
-                     lerp(iw,iw*1.4,min(1,((t-26.5)/3))))':
-               h='if(lt(t,26.5),
-                     ih,
-                     lerp(ih,ih*1.4,min(1,((t-26.5)/3))))':
-               eval=1,
+           rotate=
+                c=none:
+                ow='hypot(iw,ih)':
+                oh='hypot(ih,iw)':
+                a='if(lt(t,26.5),
+                      0,
+                      lerp(0,PI*4,min(1,((t-26.5)/20))))',
            fade=t=in:  st=13.5: d=3: alpha=1,
-           fade=t=out: st=26.5: d=8: alpha=1
+           fade=t=out: st=36:   d=3: alpha=1
        [i];
        [0:v][i]
-           overlay=
-               x='if(lt(t,26.5),
-                     50,
-                     lerp(50,(W/2-w/2),min(1,((t-26.5)/3))))':
-               y='if(lt(t,26.5),
-                     50,
-                     lerp(50,(H/2-h/2),min(1,((t-26.5)/3))))'")" \
+           overlay=0:0")" \
     -shortest \
     card.mp4
 
