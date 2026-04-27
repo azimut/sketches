@@ -1,0 +1,110 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 0 0 400 400
+
+
+% Draw a line between two 3D points
+/line3d {
+    /z2 exch def /y2 exch def /x2 exch def
+    /z1 exch def /y1 exch def /x1 exch def
+
+    newpath
+    x1 y1 z1 project moveto
+    x2 y2 z2 project lineto
+    stroke
+} def
+
+
+/angleY 40 def  % Left/Right rotation
+/angleX 25 def  % Up/Down tilt
+/dist 100 def   % Distance of the camera from the object
+
+% Procedure: project (x y z -> x' y')
+/project {
+    /z exch def
+    /y exch def
+    /x exch def
+
+    % 1. Rotate around Y axis (Left/Right)
+    /x_rotY x angleY cos mul z angleY sin mul sub def
+    /z_temp x angleY sin mul z angleY cos mul add def
+
+    % 2. Rotate around X axis (Up/Down) using the result of Y rotation
+    /y_rotX  y angleX cos mul z_temp angleX sin mul sub def
+    /z_final y angleX sin mul z_temp angleX cos mul add def
+
+    % 3. Perspective Projection: x' = x / (1 + z/distance)
+    % This makes distant points smaller
+    /scaleFactor
+    dist
+    dist z_final add
+    div
+    def
+
+    x_rotY scaleFactor mul
+    y_rotX scaleFactor mul
+
+} def
+
+
+1.1 setlinewidth
+
+
+
+/ddraw {
+  % Front Face
+  -30 -30 30  30 -30 30 line3d
+   30 -30 30  30  30 30 line3d
+   30  30 30 -30  30 30 line3d
+  -30  30 30 -30 -30 30 line3d
+
+  % Back Face
+  -30 -30 -30  30 -30 -30 line3d
+   30 -30 -30  30  30 -30 line3d
+   30  30 -30 -30  30 -30 line3d
+  -30  30 -30 -30 -30 -30 line3d
+
+  % % Connecting Edges
+  -30 -30 30 -30 -30 -30 line3d
+   30 -30 30  30 -30 -30 line3d
+   30  30 30  30  30 -30 line3d
+  -30  30 30 -30  30 -30 line3d
+} def
+
+100 100 translate
+/angleX 0 def
+ddraw
+
+200 0 translate
+/angleX 10 def
+ddraw
+
+0 200 translate
+/angleX 20 def
+ddraw
+
+-200 0 translate
+/angleX 30 def
+ddraw
+
+
+
+
+
+
+
+
+
+
+% /setcolor {
+%   { 255 div } forall setrgbcolor
+% } def
+
+% [
+%   44 44 100
+% ] setcolor
+
+% 100 % x
+% 200 % y
+% 150 % w
+% 150 % h
+% rectfill

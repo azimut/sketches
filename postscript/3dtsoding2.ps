@@ -1,0 +1,134 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 0 0 400 400
+
+% TODO: take [ x y z ] instead of x y z
+% Based on Tsoding video
+
+/width  400 def
+/height 400 def
+/s 4 def
+
+% [ r g b ] --
+/setcolor {
+  { 255 div } forall setrgbcolor
+} def
+
+% a b -- c
+/safediv {
+  dup 0 eq { 0 } { div } ifelse
+} def
+
+% x y s --
+/point {
+  /y exch def /x exch def
+  x s 2 div sub
+  y s 2 div sub
+  s s
+  rectfill
+} def
+
+% x y -- x' y'
+/screen {
+  /y exch def /x exch def
+  x 1 add 2 div width  mul
+  y 1 add 2 div height mul
+} def
+
+
+% x y z -- x' y'
+/ortho { pop } def
+
+% x y z -- x' y'
+/isometric {
+  /z exch def /y exch def /x exch def
+  x z sub
+  y x z add 2 div add
+  % x z sub 2 sqrt div
+  % x z y 2 mul add add 6 sqrt div
+} def
+
+
+% x y z -- x' y'
+/project {
+  /z exch def /y exch def /x exch def
+  x z safediv
+  y z safediv
+} def
+
+/rotate_x { % weird
+  /angle exch def /z exch def /y exch def /x exch def
+  x
+  y angle cos mul z angle sin mul sub
+  y angle sin mul z angle cos mul add
+} def
+
+/rotate_y { % weird
+  /angle exch def /z exch def /y exch def /x exch def
+  z angle sin mul x angle cos mul add
+  y
+  z angle cos mul x angle sin mul sub
+} def
+
+/rotate_z { % ok
+  /angle exch def /z exch def /y exch def /x exch def
+  x angle cos mul y angle sin mul sub
+  x angle sin mul y angle cos mul add
+  z
+} def
+
+% x1 y1 z1 x2 y2 z2 -- x' y' z'
+/move {
+  /z2 exch def /y2 exch def /x2 exch def
+  /z1 exch def /y1 exch def /x1 exch def
+  x1 x2 add
+  y1 y2 add
+  z1 z2 add
+} def
+
+/scale {
+  /by exch def /z exch def /y exch def /x exch def
+  x by mul
+  y by mul
+  z by mul
+} def
+
+% takes 2 points in screen space and draws them
+% x1 y1 x2 y2 --
+/line3d {
+  /y2 exch def /x2 exch def /y1 exch def /x1 exch def
+  newpath
+  x1 y1 moveto
+  x2 y2 lineto
+  stroke
+  % x1 y1 point
+  % x2 y2 point
+} def
+
+/transform {
+  0.8 scale
+  40 rotate_y
+  190 rotate_x
+  40 rotate_z
+  0 0 2 move
+  project
+  screen
+} def
+
+[ 30 10 10 ] setcolor
+0 0 400 400 rectfill
+
+
+[ 44 244 100 ] setcolor
+
+-0.5 -0.5  0.5 transform  0.5 -0.5  0.5 transform line3d
+ 0.5 -0.5  0.5 transform  0.5  0.5  0.5 transform line3d
+ 0.5  0.5  0.5 transform -0.5  0.5  0.5 transform line3d
+-0.5  0.5  0.5 transform -0.5 -0.5  0.5 transform line3d
+-0.5 -0.5 -0.5 transform  0.5 -0.5 -0.5 transform line3d
+ 0.5 -0.5 -0.5 transform  0.5  0.5 -0.5 transform line3d
+ 0.5  0.5 -0.5 transform -0.5  0.5 -0.5 transform line3d
+-0.5  0.5 -0.5 transform -0.5 -0.5 -0.5 transform line3d
+-0.5 -0.5  0.5 transform -0.5 -0.5 -0.5 transform line3d
+ 0.5 -0.5  0.5 transform  0.5 -0.5 -0.5 transform line3d
+ 0.5  0.5  0.5 transform  0.5  0.5 -0.5 transform line3d
+-0.5  0.5  0.5 transform -0.5  0.5 -0.5 transform line3d

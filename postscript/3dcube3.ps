@@ -1,0 +1,125 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 0 0 400 400
+
+% Draw a line between two 3D points
+/line3d {
+    /z2 exch def /y2 exch def /x2 exch def
+    /z1 exch def /y1 exch def /x1 exch def
+
+    newpath
+    x1 y1 z1 project moveto
+    x2 y2 z2 project lineto
+    stroke
+} def
+
+/rotate_x {
+  /angle exch def
+  /z exch def /y exch def /x exch def
+  x
+  y angle cos mul z angle sin mul sub
+  y angle sin mul z angle cos mul add
+} def
+
+/rotate_y {
+  /angle exch def
+  /z exch def /y exch def /x exch def
+  x angle cos mul z angle sin mul sub
+  y
+  x angle sin mul z angle cos mul add
+} def
+
+/rotate_z { % ok
+  /angle exch def /z exch def /y exch def /x exch def
+  x angle cos mul y angle sin mul sub
+  x angle sin mul y angle cos mul add
+  z
+} def
+
+/dist 100 def   % Distance of the camera from the object
+
+% x y z by
+/scale {
+  /by exch def /z exch def /y exch def /x exch def
+  /scaleFactor by by z add div def
+  x scaleFactor mul
+  y scaleFactor mul
+} def
+
+% x y z -- x y z
+/perspective {
+    /z exch def /y exch def /x exch def
+    /scaleFactor dist dist z add div def
+    x scaleFactor mul
+    y scaleFactor mul
+} def
+
+
+% Procedure: project (x y z -> x' y')
+/project {
+    /z exch def /y exch def /x exch def
+
+    x y z
+    30 rotate_x
+    40 rotate_y
+    20 rotate_z
+
+    %perspective
+} def
+
+
+1.0 setlinewidth
+
+/ddraw {
+  % Front Face
+  -30 -30 30  30 -30 30 line3d
+   30 -30 30  30  30 30 line3d
+   30  30 30 -30  30 30 line3d
+  -30  30 30 -30 -30 30 line3d
+
+  % Back Face
+  -30 -30 -30  30 -30 -30 line3d
+   30 -30 -30  30  30 -30 line3d
+   30  30 -30 -30  30 -30 line3d
+  -30  30 -30 -30 -30 -30 line3d
+
+  % % Connecting Edges
+  -30 -30 30 -30 -30 -30 line3d
+   30 -30 30  30 -30 -30 line3d
+   30  30 30  30  30 -30 line3d
+  -30  30 30 -30  30 -30 line3d
+} def
+
+100 100 translate
+ddraw
+
+200 0 translate
+ddraw
+
+0 200 translate
+ddraw
+
+-200 0 translate
+ddraw
+
+
+
+
+
+
+
+
+
+
+% /setcolor {
+%   { 255 div } forall setrgbcolor
+% } def
+
+% [
+%   44 44 100
+% ] setcolor
+
+% 100 % x
+% 200 % y
+% 150 % w
+% 150 % h
+% rectfill

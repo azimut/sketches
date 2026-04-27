@@ -1,0 +1,60 @@
+%!PS-Adobe-3.0
+%%BoundingBox: 0 0 400 400
+
+% Draw a line between two 3D points
+/line3d {
+    /z2 exch def /y2 exch def /x2 exch def
+    /z1 exch def /y1 exch def /x1 exch def
+
+    newpath
+    x1 y1 z1 project moveto
+    x2 y2 z2 project lineto
+    stroke
+} def
+
+
+/angle 15 def  % Change this angle (0-360) to rotate the cube
+
+% Procedure to project 3D (x, y, z) to 2D (x', y')
+% We are doing a Y-axis rotation and dropping the Z for ortnhographic projection
+/project {
+    /z exch def
+    /y exch def
+    /x exch def
+
+    % Formula: x' = x*cos(angle) + z*sin(angle)
+    x angle cos mul
+    z angle sin mul
+    sub
+
+
+    % For y', we just keep y (orthographic projection)
+    x angle sin mul
+    z angle cos mul
+    add
+
+    div
+
+    y
+    x angle sin mul
+    z angle cos mul
+    add
+    div
+
+} def
+
+100 100 translate
+/angle 0 def
+ddraw
+
+200 0 translate
+/angle 10 def
+ddraw
+
+0 200 translate
+/angle 20 def
+ddraw
+
+-200 0 translate
+/angle 30 def
+ddraw
