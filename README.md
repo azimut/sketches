@@ -4,7 +4,7 @@ These are some visual sketches I made while learning about digital art.
 
 ## Captures
 
-### Code of Nature
+### Nature of Code
 
 <p float="left" align="middle">
   <a href="media/noc5.gif"><img src="media/thumbs/noc1.jpg" width="200"/></a>
