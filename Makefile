@@ -36,5 +36,15 @@ media/psd-world.png: spirit-deck/the-world.ps
 media/psd-sun.png: spirit-deck/the-sun.ps
 	convert -density 400 -page a4 $< $@
 
+media/01text.png:
+	convert -define ps:use-cropbox=true -density 200 postscript/01text.ps -quality 100 $@
+media/02text.png:
+	convert -define ps:use-cropbox=true -density 200 postscript/02text.ps -quality 100 $@
+media/03text.png:
+	convert -define ps:use-cropbox=true -density 200 postscript/03text.ps -quality 100 $@
+media/01shapes.png:
+	convert +antialias -define ps:use-cropbox=true -density 200 postscript/01shapes.ps $@
+
+
 media/%.png: circuits/%.m4
 	cd circuits/ && make DESTDIR=$(shell readlink -f media)/ $(@F)
