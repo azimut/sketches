@@ -15,7 +15,7 @@ These are some visual sketches I made while learning about digital art.
 ### PixelSpirit Deck
 
 <p float="left" align="middle">
-  <a href="media/all-cards.png"><img src="media/thumbs/all-cards.png" width="600" /></a>
+  <a href="media/all-cards.png"><img src="media/thumbs/all-cards.png" width="500" /></a>
 </p>
 
 ### ImageMagick
