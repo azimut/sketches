@@ -15,9 +15,7 @@ These are some visual sketches I made while learning about digital art.
 ### PixelSpirit Deck
 
 <p float="left" align="middle">
-  <a href="media/psd-sun.png"><img src="media/thumbs/psd-sun.jpg" width="200" /></a>
-  <a href="media/psd-world.png"><img src="media/thumbs/psd-world.jpg" width="200" /></a>
-  <a href="media/psd-empress.png"><img src="media/thumbs/psd-empress.jpg" width="200" /></a>
+  <a href="media/all-cards.png"><img src="media/thumbs/all-cards.png" width="600" /></a>
 </p>
 
 ### ImageMagick
@@ -26,6 +24,12 @@ These are some visual sketches I made while learning about digital art.
   <a href="media/swirly-bars.png"><img src="media/thumbs/swirly-bars.jpg" width="200" /></a>
   <a href="media/swirly-checkers.png"><img src="media/thumbs/swirly-checkers.jpg" width="200" /></a>
   <a href="media/m4spheres.sh.jpg"><img src="media/m4spheres.sh.jpg" width="200" /></a>
+</p>
+
+### PostScript
+
+<p float="left" align="middle">
+  <a href="media/01-text.png"><img src="media/01-text.png" width="200" /></a>
 </p>
 
 ## Restrictions

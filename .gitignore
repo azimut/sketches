@@ -2,6 +2,7 @@
 *.gif
 *.png
 !/media/*.png
+!/media/thumbs/*.png
 !/media/*.gif
 
 #
