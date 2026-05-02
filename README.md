@@ -21,9 +21,7 @@ These are some visual sketches I made while learning about digital art.
 ### ImageMagick
 
 <p float="left" align="middle">
-  <a href="media/swirly-bars.png"><img src="media/thumbs/swirly-bars.jpg" width="200" /></a>
-  <a href="media/swirly-checkers.png"><img src="media/thumbs/swirly-checkers.jpg" width="200" /></a>
-  <a href="media/m4spheres.sh.jpg"><img src="media/m4spheres.sh.jpg" width="200" /></a>
+  <a href="media/all-imagemagick.jpg"><img src="media/thumbs/all-imagemagick.jpg" width="500" /></a>
 </p>
 
 ### PostScript
