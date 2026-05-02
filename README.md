@@ -29,7 +29,7 @@ These are some visual sketches I made while learning about digital art.
 ### PostScript
 
 <p float="left" align="middle">
-  <a href="media/01-text.png"><img src="media/01-text.png" width="200" /></a>
+  <a href="media/01text.png"><img src="media/01text.png" width="200" /></a>
 </p>
 
 ## Restrictions
