@@ -1,0 +1,27 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Pages: 1
+%%BoundingBox: 0 0 400 400
+%%EndComments
+
+0 setgray 0 0 400 400 rectfill
+
+/showtime {
+  gsave (Time) show grestore
+  gsave
+    0 setgray
+    1 setlinewidth
+    (Time) false charpath stroke
+  grestore
+} def
+
+0.01 setlinewidth
+
+/limit 160 def
+
+10 2 limit {
+  /w exch def
+  /Times-Roman w selectfont
+  w limit div setgray
+  w limit div 45 mul w moveto
+  showtime
+} for

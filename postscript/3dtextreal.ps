@@ -1,0 +1,78 @@
+%!PS
+
+
+% Assume /transform is defined as: { ... } def (takes x y, returns x' y')
+
+
+/angleY 25 def   % Tilt angle
+/dist 400 def    % Perspective distance (smaller = more dramatic)
+
+/transform {
+    /y exch def
+    /x exch def
+    
+    % 1. 3D Rotation around Y (calculating the new X and Z)
+    % x' = x * cos(theta)
+    % z' = x * sin(theta)
+    /x_rot x angleY cos mul def
+    /z_rot x angleY sin mul def
+    
+    % 2. Perspective Projection
+    % Formula: scale = dist / (dist + z)
+    /scale dist dist z_rot add div def
+    
+    % Apply scale to both X and Y
+    x_rot scale mul
+    y scale mul
+} def
+
+/projectPath {
+  % flattenpath converts all bezier curves into straight lines
+  % so that pathforall only encounters moveto, lineto, and closepath.
+  flattenpath
+  { transform moveto }    % proc for moveto
+  { transform lineto }    % proc for lineto
+  { pop pop pop pop pop pop } % proc for curveto (should not be called due to flattenpath)
+  { closepath }           % proc for closepath
+  pathforall
+} def
+
+% --- Example Usage ---
+
+/Helvetica-Bold findfont 100 scalefont setfont
+
+% % 1. Create the path for the text
+% newpath
+% 100 100 moveto
+% (3D Text) true charpath
+
+% % 2. Apply the projection
+% % newpath
+% projectPath
+
+% % 3. Stroke or Fill the resulting deformed path
+% 0.5 setgray
+% % fill
+% stroke
+
+newpath
+100 100 moveto
+(Foo Bar) true charpath
+
+/first true def  % Create a flag
+
+flattenpath
+
+{
+  first { 
+    newpath     % Clear the original path the first time
+    /first false def 
+  } if
+  transform moveto 
+}
+{ transform lineto }
+{ pop pop pop pop pop pop }
+{ closepath }
+pathforall
+
+stroke

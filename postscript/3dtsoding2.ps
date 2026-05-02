@@ -107,8 +107,8 @@
 /transform {
   0.8 scale
   40 rotate_y
-  190 rotate_x
-  40 rotate_z
+  90 rotate_x
+  10 rotate_z
   0 0 2 move
   project
   screen
@@ -119,6 +119,33 @@
 
 
 [ 44 244 100 ] setcolor
+
+-100 -100 translate
+
+-0.5 -0.5  0.5 transform  0.5 -0.5  0.5 transform line3d
+ 0.5 -0.5  0.5 transform  0.5  0.5  0.5 transform line3d
+ 0.5  0.5  0.5 transform -0.5  0.5  0.5 transform line3d
+-0.5  0.5  0.5 transform -0.5 -0.5  0.5 transform line3d
+-0.5 -0.5 -0.5 transform  0.5 -0.5 -0.5 transform line3d
+ 0.5 -0.5 -0.5 transform  0.5  0.5 -0.5 transform line3d
+ 0.5  0.5 -0.5 transform -0.5  0.5 -0.5 transform line3d
+-0.5  0.5 -0.5 transform -0.5 -0.5 -0.5 transform line3d
+-0.5 -0.5  0.5 transform -0.5 -0.5 -0.5 transform line3d
+ 0.5 -0.5  0.5 transform  0.5 -0.5 -0.5 transform line3d
+ 0.5  0.5  0.5 transform  0.5  0.5 -0.5 transform line3d
+-0.5  0.5  0.5 transform -0.5  0.5 -0.5 transform line3d
+
+200 0 translate
+
+/transform {
+  0.8 scale
+  40 rotate_y
+  20 rotate_x
+  40 rotate_z
+  0 0 2 move
+  project
+  screen
+} def
 
 -0.5 -0.5  0.5 transform  0.5 -0.5  0.5 transform line3d
  0.5 -0.5  0.5 transform  0.5  0.5  0.5 transform line3d

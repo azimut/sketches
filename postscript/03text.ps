@@ -1,0 +1,29 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Pages: 1
+%%BoundingBox: 0 0 400 400
+%%EndComments
+
+0 setgray 0 0 400 400 rectfill
+
+      1 setgray
+200 200 translate
+  0   0 moveto
+
+0 10 360 {
+  gsave
+    rotate
+    0 1 500 {
+      500 div dup
+      2.5 mul 2 exp setgray
+      5 mul 2 exp setlinewidth
+      0 1 rlineto currentpoint stroke moveto
+    } for
+  grestore
+} for
+
+initgraphics
+1 setgray
+77 175 moveto
+/Courier-Bold 100 selectfont
+gsave 0 setgray 3 setlinewidth (void) false charpath stroke grestore
+(void) show

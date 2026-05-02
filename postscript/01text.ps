@@ -1,0 +1,83 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Pages: 1
+%%BoundingBox: 0 0 400 400
+%%EndComments
+
+/half 200 def
+
+/getheight {
+    gsave
+    newpath
+    0 0 moveto
+    false charpath  % Create path for string on stack
+    flattenpath     % Necessary for accurate curved boundaries
+    pathbbox        % Returns llx lly urx ury on stack
+    exch pop        % Discard urx
+    exch sub        % Calculate ury - lly (height)
+    exch pop        % Discard llx
+    grestore
+} def
+
+/degrees { 180 mul 3.141592653589793 div } def
+/drop { pop } def
+/swap { exch } def
+/over { 1 index } def
+/pick { 2 index } def
+/dupd { exch dup 3 2 roll } def
+/swapd { 3 1 roll exch 3 2 roll } def
+/rot { 3 2 roll } def
+/-rot { 3 -2 roll } def
+/nip  { exch pop } def
+/2dup { 2 copy } def
+/bi { % x p q --
+   rot % p q x
+   dup % p q x x
+  -rot % p x q x
+  exch % p x x q
+  exec % p x x'
+  -rot % x' p x
+  exch % x' x p
+  exec % x' y'
+  exch % y' x'
+} def
+
+/strokemiddle {
+  dup
+  { stringwidth pop 2 div half exch sub }
+  { getheight 2 div half exch sub }
+  bi
+  newpath
+  moveto
+  false charpath
+  fill
+  % 1.8 setlinewidth
+  % gsave stroke grestore
+  % 0 setgray
+  % fill
+} def
+
+0 0 0 setrgbcolor
+0 0 400 400 rectfill
+
+0.4 setgray
+/Palatino-Roman 20 selectfont
+
+2 srand
+
+0 48 500 {   % x
+  0 20 500 { % y
+    dupd
+    /y exch def /x exch def
+    x rand 50 mod dup 30 gt { drop } { sub } ifelse
+    y moveto
+    (vivir) show
+  } for
+} for
+
+/Palatino-Roman findfont
+[80 0 0 200 0 0] makefont setfont
+
+1 setgray
+0.8 setlinewidth
+
+(Sobre) strokemiddle
