@@ -1,18 +1,26 @@
 include <./parts/smoothrod_groved.scad>;
-translate([0,0,30]) rotate([45,0,0]) smoothrod_groved();
+include <./parts/spool.scad>;
 
-
-// ideas: inverted pyramid, +arcs, circles cuts on angle
+translate([0,0,frame.z/2 + thickness])
+rotate([45,0,0])
+smoothrod_groved();
 
 frame = [370, 9.4, 50.4];
 
-#frame();
+frame();
 
-wideness       = 20;
-thickness      = 5;
-bite_height    = 7;
+translate([-spool_height/2,
+           -spool_diameter/3,
+           spool_diameter*.7])
+rotate([0,90,0])
+spool();
 
-%translate([-wideness/2,-thickness-frame.y/2])
+wideness      = 20;
+thickness     = 5;
+bite_uheight  = 10;
+bite_lheight  = 1;
+
+translate([-wideness/2,-thickness-frame.y/2])
 rotate([90,0,90])
 linear_extrude(wideness)
 offset(1)
@@ -29,8 +37,8 @@ union() {
       polygon([[0                    , 0],
                [0                    , frame.z/2 + thickness],
                [thickness*2 + frame.y, frame.z/2 + thickness],
-               [thickness*2 + frame.y, frame.z/2 + thickness - bite_height ],
-               [thickness   + frame.y, frame.z/2 + thickness - bite_height ],
+               [thickness*2 + frame.y, frame.z/2 - ((i==0) ? bite_uheight : bite_lheight) ],
+               [thickness   + frame.y, frame.z/2 - ((i==0) ? bite_uheight : bite_lheight) ],
                [thickness   + frame.y, frame.z/2],
                [thickness            , frame.z/2],
                [thickness            , 0]]);
@@ -43,6 +51,7 @@ union() {
 // }
 
 module frame() {
+  color("#c19a6b")
   cube(frame, center=true);
 }
 
