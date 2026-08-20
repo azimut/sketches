@@ -1,34 +1,40 @@
 include <./parts/smoothrod_groved.scad>;
 include <./parts/spool.scad>;
 
-translate([0,0,frame.z/2 + thickness])
-rotate([45,0,0])
-smoothrod_groved();
-
-frame = [370, 9.4, 50.4];
-
+frame = [100, 9.4, 50.4]; // 370
 frame();
 
+rod_bottom    = 45;
+rod_angle     = 15;
+wideness      = 20;
+thickness     =  8;
+bite_uheight  = 10;
+bite_lheight  =  0;
+spool_offset  = 10;
+
+translate([0,0,frame.z/2 + thickness])
+  rotate([rod_angle,0,0])
+    smoothrod_groved();
+
+
 translate([-spool_height/2,
-           -spool_diameter/3,
-           spool_diameter*.7])
+           -spool_diameter/5,
+           spool_diameter/2 + frame.z/2 + thickness + rod_bottom + spool_offset])
 rotate([0,90,0])
 spool();
-
-wideness      = 20;
-thickness     = 5;
-bite_uheight  = 10;
-bite_lheight  = 1;
 
 translate([-wideness/2,-thickness-frame.y/2])
 rotate([90,0,90])
 linear_extrude(wideness)
-offset(1)
+offset(2)
 union() {
+  polygon([[0                    ,  frame.z/2 + thickness] + rod_bottom*indir(90+rod_angle),
+           [0                    ,  frame.z/2 + thickness],
+           [0                    , -frame.z/2 - thickness]]);
   polygon([[0                    ,-(frame.z/2 + thickness)],
            [0                    , frame.z/2 + thickness],
-           [0                    , frame.z/2 + thickness]   + [-30,30],
-           [thickness*2 + frame.y, frame.z/2 + thickness]   + [-30,30],
+           [0                    , frame.z/2 + thickness] + rod_bottom*indir(90+rod_angle),
+           [thickness*2 + frame.y, frame.z/2 + thickness] + rod_bottom*indir(90+rod_angle),
            [thickness*2 + frame.y, frame.z/2 + thickness],
            [0                    , frame.z/2 + thickness]]);
 
@@ -49,6 +55,8 @@ union() {
 //   shape1();
 //   frame();
 // }
+
+function indir(angle) = [cos(angle),sin(angle)];
 
 module frame() {
   color("#c19a6b")
