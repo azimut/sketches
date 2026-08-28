@@ -3,18 +3,32 @@ include <./parts/spool.scad>;
 include <./parts/frame.scad>;
 include <Round-Anything/polyround.scad>;
 
-width = 30;
+width = 50;
 angle = 80;
 thickness = 14;
+lip_bottom = 1;
+magic_number = 15;
 
-holder(lip_bottom = 1, thickness = thickness, angle = angle, width = width);
+if ($preview) {
+  holder(lip_bottom = lip_bottom, thickness = thickness, angle = angle, width = width);
+  frame();
+  rotate([90-angle,0,0]) translate([0,-magic_number,0]) smoothrod_groved();
+  translate([0, -40, spool_diameter/2 + thickness + frame.z/2 + 10])
+    rotate([90,0,90]) spool();
+} else {
+  rotate([0,90,0])
+  holder(lip_bottom = lip_bottom, thickness = thickness, angle = angle, width = width);
+}
 
 module holder (angle,width,thickness,lip_bottom,lip_top) {
-  translate([-width/4,0,0])
-    rotate([90,0,90])
-    %extrudeWithRadius(width/2,0.5,0.5,3)
-    translate([-frame.y/2,-frame.z/2,0])
-    holder_silloute(lip_bottom = 1, thickness = thickness, angle = angle);
+  difference() {
+    translate([-width/4,0,0])
+      rotate([90,0,90])
+      extrudeWithRadius(width/2,0.5,0.5,3)
+      translate([-frame.y/2,-frame.z/2,0])
+      holder_silloute(lip_bottom = 1, thickness = thickness, angle = angle);
+    rotate([90-angle,0,0]) translate([0,-magic_number,0]) smoothrod_groved();
+  }
 }
 
 module holder_silloute (thickness = 10, lip_top = 4, lip_bottom = 2, radius = 3, angle = 45) {
@@ -35,8 +49,3 @@ module holder_silloute (thickness = 10, lip_top = 4, lip_bottom = 2, radius = 3,
             ];
   polygon(polyRound(points, 30));
 }
-frame();
-
-rotate([90-angle,0,0]) translate([0,-15,0]) smoothrod_groved();
-translate([0, -40, spool_diameter/2 + thickness + frame.z/2 + 10])
-rotate([90,0,90]) spool();
