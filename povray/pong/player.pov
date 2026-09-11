@@ -1,3 +1,4 @@
+#version 3.7;
 #include "colors.inc"
 #include "stones.inc"
 #include "rad_def.inc"
