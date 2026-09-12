@@ -8,8 +8,8 @@
 #declare Mat_Body   = material {
   texture {
     pigment {White * 0.01}
-    normal {granite 1 turbulence 1 scale .2}
-    finish {diffuse .5 specular .01 roughness .001}
+    normal {bumps 0.2 turbulence 1 scale .005}
+    finish {diffuse 0.2 specular 0.1 roughness 0.01}
   }
 }
 #default {finish{ambient 0}}
