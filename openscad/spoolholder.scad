@@ -10,12 +10,19 @@ lip_top      = 2;
 lip_bottom   = 0.6;
 magic_number = 12;
 error        = 0.2;
+separation   = 120;
 
 if ($preview) {
   frame();
-  holder(lip_bottom = lip_bottom, lip_top = lip_top, thickness = thickness, angle = angle, width = width, frame=frame, error = error);
-  rotate([90-angle,0,0]) translate([0,-magic_number,0])
+  // Hold - LEFT
+  translate([separation/2,0,0]) holder(lip_bottom = lip_bottom, lip_top = lip_top, thickness = thickness, angle = angle, width = width, frame=frame, error = error);
+  rotate([90-angle,0,0]) translate([separation/2,-magic_number,0])
     smoothrod_groved();
+  // Hold - RIGHT
+  translate([-separation/2,0,0]) holder(lip_bottom = lip_bottom, lip_top = lip_top, thickness = thickness, angle = angle, width = width, frame=frame, error = error);
+  rotate([90-angle,0,0]) translate([-separation/2,-magic_number,0])
+    smoothrod_groved();
+  // Spool
   translate([0, -40, spool_diameter/2 + thickness + frame.z/2 + 10])
     rotate([90,0,90])
     spool();
