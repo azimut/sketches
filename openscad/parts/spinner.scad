@@ -1,39 +1,76 @@
+include <./smoothrod_groved.scad>;
 include <./bearing.scad>
 include <BOSL2/std.scad>
+include <BOSL2/rounding.scad>
 
-body = [20,30,30];
-epsilon = 0.001;
 delta = 0.2;
-holdrod_radius = 4;
-holdrod_wall = 3;
-spinrod_radius = bearing_idiameter/2 + epsilon;
-angle = 20;
-hold_distance = [0,-body.y/2,-15];
-hold_height = 50;
-$fn=80;
-
-
-union() {
-  up(16) xrot(160)  spinner();
-  //linear_extrude(2) projection() up(30) xrot(160) spinner();
-}
+spinner_body_radius = 15;
+spinner_body_height = 15;
+spinner_tube_height = 50;
+spinner_tube_radius = 8;
+spinner_tube_extra_offset = -3;
 
 module spinner() {
   difference() {
-    hull() {
-     xrot(angle) cuboid(size=body, rounding=7, edges=[BACK+LEFT,BACK+RIGHT, BOTTOM]);
-      move(hold_distance) xrot(angle) cyl(h=hold_height,r=holdrod_radius+holdrod_wall,chamfer1=1,chamfer2=0);
+    union() {
+      rawspinner(th=spinner_tube_height,
+                 tr=spinner_tube_radius,
+                 br=spinner_body_radius,
+                 bh=spinner_body_height,
+                 textra=spinner_tube_extra_offset,
+                 delta=delta);
+
+      hull(){
+        down(spinner_tube_radius)
+          up(-0.0003)
+          linear_extrude(spinner_tube_radius)
+          projection()
+          rawspinner(th=spinner_tube_height,
+                     tr=spinner_tube_radius,
+                     br=spinner_body_radius,
+                     bh=spinner_body_height,
+                     textra=spinner_tube_extra_offset,
+                     delta=delta);
+
+        scale([0.9,0.9,1])
+          down(spinner_tube_radius + 2.5)
+          up(-0.0003)
+          linear_extrude(spinner_tube_radius)
+          projection()
+          rawspinner(th=spinner_tube_height,
+                     tr=spinner_tube_radius,
+                     br=spinner_body_radius,
+                     bh=spinner_body_height,
+                     textra=spinner_tube_extra_offset,
+                     delta=delta);
+      }
     }
-    bearings();
-    spinrod(r=spinrod_radius);
-    holdrod(r=holdrod_radius);
+    spinrod(r=4);
+    holdrod(extra=spinner_tube_extra_offset);
+    bearings(dt=delta);
   }
 }
 
-module holdrod (r) { move(hold_distance) xrot(270+angle) ymove(body.z/2) ycyl(r=r,h=hold_height*2); }
-module spinrod (r) { xcyl(r=r,h=50); }
-module bearings() {
+module rawspinner(th,tr,br,bh,textra=0,delta=0) {
+  hull() {
+    spinner_tube(r=tr, h=th, extra=textra);
+    zcyl(r=br, h=bh, rounding=5);
+  }
+}
+
+module spinner_tube(r,h,extra=0) {
+  xmove(bearing_diameter/2 + spinner_tube_radius + extra)
+    ycyl(h=h,r=r,rounding=5);
+}
+
+module holdrod (extra=0) {
+  right(bearing_diameter/2+spinner_tube_radius + extra)
+    back(100)
+    xrot(90)
+    smoothrod_groved(dt=delta); }
+module spinrod (r) { zcyl(r=r,h=50); }
+module bearings(dt=dt) {
   hull()
-    xmove(bearing_height) xscale(2) yrot(90)
-    bearing(dt=delta);
+    zmove(bearing_height) zscale(2)
+    bearing(dt=dt);
 }
