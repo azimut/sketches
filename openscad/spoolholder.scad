@@ -14,18 +14,17 @@ error        = 0.2;
 separation   = 120;
 
 if ($preview) {
-  back(-20) up(150) xcyl(h=300,r=4);
-  back(-20)
-  up(150)
+  back(-20) up(150) {
+    color("silver")
+      xcyl(h=300,r=4);
     left(separation/2)
-    xrot(-90+10) yrot(90)
-    spinner();
-
-  back(-20)
-  up(150)
+      xrot(-90+10) yrot(90)
+      spinner();
     right(separation/2)
-    xrot(90+10) yrot(-90)
-    spinner();
+      xrot(90+10) yrot(-90)
+      spinner();
+  }
+
   frame();
   // Hold - LEFT
   translate([separation/2,0,0]) holder(lip_bottom = lip_bottom, lip_top = lip_top, thickness = thickness, angle = angle, width = width, frame=frame, error = error);
@@ -41,7 +40,7 @@ if ($preview) {
     spool();
 } else {
   $fn=200;
-  rotate([90,0,0])
+  rotate([0,90,0])
     holder(lip_bottom = lip_bottom, lip_top = lip_top, thickness = thickness, angle = angle, width = width, frame=frame, error = error);
 }
 

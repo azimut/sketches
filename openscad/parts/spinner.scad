@@ -9,6 +9,7 @@ spinner_body_height = 15;
 spinner_tube_height = 50;
 spinner_tube_radius = 8;
 spinner_tube_extra_offset = -3;
+spinner_holder_rod_radius = 4 + 2;
 
 module spinner() {
   difference() {
@@ -45,7 +46,7 @@ module spinner() {
                      delta=delta);
       }
     }
-    spinrod(r=4);
+    spinrod(r=spinner_holder_rod_radius);
     holdrod(extra=spinner_tube_extra_offset);
     bearings(dt=delta);
   }
