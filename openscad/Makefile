@@ -5,16 +5,10 @@ OPENSCAD_ARGS += --colorscheme="Nature"
 WIDTH         ?= 720
 HEIGHT        ?= 720
 
-.PHONY: all
+.PHONY: all stl pov clean
 all: stl pov
-
-.PHONY: stl
 stl: spinner.stl lholder.stl rholder.stl
-
-.PHONY: pov
 pov: spinner.pov lholder.pov rholder.pov
-
-.PHONY: clean
 clean:; rm -vf *.pov *.stl *.png *.mp4
 
 spinner.stl: spoolholder.scad
