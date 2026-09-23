@@ -15,7 +15,7 @@ stl: spinner.stl lholder.stl rholder.stl
 pov: spinner.pov lholder.pov rholder.pov
 
 .PHONY: clean
-clean: rm -f *.pov *.stl *.png *.mp4
+clean:; rm -vf *.pov *.stl *.png *.mp4
 
 spinner.stl: spoolholder.scad
 	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_lholder=false -D show_rholder=false -o $@ $<
