@@ -20,12 +20,15 @@ radius_left   = 4;
 module holder (rr=radius_right,rl=radius_left,error = 0) {
   // Branding
   translate([-thickness*1.5-1, frame.z/2, rl < 1 ? -width/2-1 : width/2])
-    rotate([0,0,90])
     linear_extrude(1)
-    text("8", size=13, direction="ltr", halign="center", valign="center");
+    text("O", size=17, direction="ltr", halign="center", valign="center");
   translate([-thickness*1.5-1, frame.z/2, rl < 1 ? -width/2-1 : width/2])
     linear_extrude(1)
     text("/", size=15, direction="ltr", halign="center", valign="center");
+  translate([-thickness*1.5-1, frame.z/2, rl < 1 ? -width/2-1 : width/2])
+    rotate([0,0,90])
+    linear_extrude(1)
+    text("8", size=13, direction="ltr", halign="center", valign="center");
   // The Holder
   let (frame = frame + [0,error,error])
     difference() {

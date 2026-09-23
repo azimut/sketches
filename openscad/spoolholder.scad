@@ -4,7 +4,7 @@ include <./parts/frame.scad>;
 include <./parts/holder.scad>;
 include <./parts/spinner.scad>;
 
-angle        = 80;
+angle        = 75;
 thickness    = 11;
 magic_number = 12;
 error        = 0.2;
@@ -15,7 +15,7 @@ show_rholder = true;
 show_spinner = true;
 
 if ($preview) {
-  $fn=200;
+  $fn=20;
   frame();
   back(-23) up(spool_diameter/2 + thickness + frame.z/2 + 5) {
     // Spool

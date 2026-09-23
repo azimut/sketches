@@ -16,6 +16,7 @@ module spinner() {
     translate([spinner_body_radius+1.25,0,spinner_tube_radius-4]) linear_extrude(4.5) {
       text("8", size=9, valign="center", halign="center");
       zrot(90) text("/", size=9, valign="center", halign="center");
+      zrot(90) text("O", size=10, valign="center", halign="center");
     }
     holdrod(extra=spinner_tube_extra_offset);
   }
