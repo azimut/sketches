@@ -1,5 +1,8 @@
 // down(220.5/2) smoothrod_groved(bh=220.5);
 
+smoothrod_body_diameter = 8;
+smoothrod_body_height = 220.2;
+
 // Smoothrod from a HP printer that originally comes with plastic black disks for the stuck paper
 module smoothrod_groved(el1h=1,   el1d1=3, el1d2=5,
                         el2h=1.7, el2d=5,
@@ -7,7 +10,7 @@ module smoothrod_groved(el1h=1,   el1d1=3, el1d2=5,
                         el4h=1,
                         el5h=1,
                         el6h=11.5, el6d=6,
-                        bh=220.2,bd=8,
+                        bh=smoothrod_body_height, bd=smoothrod_body_diameter,
                         es1d=6,es1h=10.5,
                         es2d=4.5,es2h=3,
                         es3d1=5.5,es3d2=4,es3h=1.5,

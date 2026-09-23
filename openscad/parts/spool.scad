@@ -10,7 +10,7 @@ spool_diameter = disk_diameter;
 spool_height   = disk_height*2 + tube_height;
 
 module spool () {
-  color("red")
+  color("crimson")
     union() {
       translate([0,0,-tube_height/2]) spool_disk();
       spool_tube();
