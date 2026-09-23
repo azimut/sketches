@@ -6,7 +6,13 @@ WIDTH         ?= 720
 HEIGHT        ?= 720
 
 .PHONY: all
-all: spinner.stl lholder.stl rholder.stl
+all: stl pov
+
+.PHONY: stl
+stl: spinner.stl lholder.stl rholder.stl
+
+.PHONY: pov
+pov: spinner.pov lholder.pov rholder.pov
 
 spinner.stl: spoolholder.scad
 	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_lholder=false -D show_rholder=false -o $@ $<
