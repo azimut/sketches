@@ -17,12 +17,12 @@ class Enemigo:
         self.y = -self.alto;
     def mostrar(self, ventana):
         ventana.blit(self.image, (self.x,self.y))
-    def mover(self):
-        self.y += 2
+    def mover(self, accel):
+        self.y += 2 + accel
         self.x += math.sin(self.y*0.02) * 3
         self.x = min(max(self.x, 0), ventanaH - self.ancho)
         if self.y > ventanaV:
-            self.y = -self.alto
+            self.y = -self.alto -accel
             self.x = random.randint(0,ventanaH-self.ancho)
     def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
         xc_enemigo = self.x + self.ancho/2
@@ -63,24 +63,40 @@ class Nave:
         self.y = ventanaV - self.alto - 20
         self.velx = 0
         self.vely = 0
-        self.misiles = [Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil()]
+        self.accel = 0
+        self.salud = 5
+        self.misiles = [Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),
+                        Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil()]
+        self.disparo_delay = 0
+        self.disparando = False
+    def golpear(self):
+        self.salud -= 1
+    def muerta(self):
+        return self.salud == 0
     def mostrar(self, ventana):
         for misil in self.misiles:
             misil.mostrar(ventana)
         ventana.blit(self.imagen, (self.x, self.y))
     def mover(self):
+        if self.disparando:
+            self.disparo_delay -= 1
+            if self.disparo_delay < 0:
+                self.disparo_delay = fps / 10
+                for misil in self.misiles:
+                    if misil.y < 0:
+                        misil.y = self.y - misil.alto
+                        misil.x = self.x + self.ancho/2 - misil.ancho/2
+                        break
         self.x += self.velx
         self.y += self.vely
         self.x = min(max(self.x, 0), ventanaH - self.ancho)
-        self.y = min(max(self.y, 0), ventanaV - self.alto)
+        self.y = min(max(self.y, ventanaV/2), ventanaV - self.alto)
         for misil in self.misiles:
             misil.mover()
+    def pausa(self):
+        self.disparando = False
     def disparar(self, ventana):
-        for misil in self.misiles:
-            if misil.y < 0:
-                misil.y = self.y - misil.alto
-                misil.x = self.x + self.ancho/2 - misil.ancho/2
-                break
+        self.disparando = True
 
 
 class Estrella:
@@ -91,7 +107,8 @@ class Estrella:
         self.accel = 0
     def mostrar(self, ventana):
         pygame.draw.rect(ventana, blanco, (self.x,self.y,self.size, self.size + self.accel))
-    def mover(self):
+    def mover(self, accel):
+        self.accel = accel
         # self.x = (self.x + 2*self.size*.2) % ventanaH
         self.y = ((self.y + 2*self.size*.2)+self.accel) % ventanaV
         if self.x == 0 or self.y == 0:
@@ -105,9 +122,9 @@ class Estrellas:
     def mostrar(self, ventana):
         for estrella in self.universo:
             estrella.mostrar(ventana)
-    def mover(self):
+    def mover(self, accel):
         for estrella in self.universo:
-            estrella.mover()
+            estrella.mover(accel)
 
 
 def main():
@@ -120,11 +137,17 @@ def main():
     while jugando:
         ventana.fill(negro)
         estrellas.mostrar(ventana)
-        estrellas.mover()
+        estrellas.mover(nave.accel)
         nave.mostrar(ventana)
         nave.mover()
         enemigo.mostrar(ventana)
-        enemigo.mover()
+        enemigo.mover(nave.accel)
+        if enemigo.choca_con(nave):
+            enemigo.y = ventanaV
+            nave.golpear()
+        if nave.muerta():
+            jugando = False
+
         for misil in nave.misiles:
             if enemigo.choca_con(misil):
                 misil.y = -misil.alto
@@ -135,26 +158,29 @@ def main():
                 if event.key == pygame.K_SPACE:
                     nave.disparar(ventana)
                 if event.key == pygame.K_j:
-                    nave.velx -= 5
+                    nave.velx -= 6
                 if event.key == pygame.K_l:
-                    nave.velx += 5
+                    nave.velx += 6
                 if event.key == pygame.K_k:
-                    nave.vely += 5
+                    nave.vely += 6
                 if event.key == pygame.K_i:
                     nave.vely -= 3
                     for estrella in estrellas.universo:
-                        estrella.accel = 5
+                        nave.accel = 5
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_i:
                     nave.vely = 0
                     for estrella in estrellas.universo:
-                        estrella.accel = 0
+                        nave.accel = 0
                 if event.key == pygame.K_k:
                     nave.vely = 0
                 if event.key == pygame.K_j:
                     nave.velx = 0
                 if event.key == pygame.K_l:
                     nave.velx = 0
+                if event.key == pygame.K_SPACE:
+                    nave.pausa()
+
             if event.type == pygame.QUIT:
                 jugando = False
         pygame.display.flip()
