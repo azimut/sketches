@@ -10,7 +10,7 @@ nave.png:
 
 misil.png:
 	magick xc:transparent -geometry 100x100 \
-	-draw 'scale 0.8,0.8 \
+	-draw 'scale 0.4,0.4 \
                fill red    circle 50,50,30,50 \
                fill orange circle 50,50,35,50 \
                fill yellow circle 50,50,40,50' \
