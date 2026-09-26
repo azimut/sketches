@@ -8,9 +8,30 @@ nave.png:
 	\( xc:"#cccc00" xc:"#00ffff" xc:"#aaa" +append \) \
 	-clut $@
 
+nave_izq.png:
+	magick xc:transparent -geometry 100x100 \
+	-fill green -stroke black \
+	-draw "path 'M50,10 L80,70 L50,60 \
+                     M50,10 L20,90 L50,60'" \
+	-fuzz 15% -trim +repage \
+	-channel RGB -fx 'Xi=i-w/2; Yj=j-h/2+20; 0.8*(0.5-hypot(Xi,Yj)/70.0)+0.5' \
+	\( xc:"#cccc00" xc:"#00ffff" xc:"#aaa" +append \) \
+	-clut $@
+
+nave_der.png:
+	magick xc:transparent -geometry 100x100 \
+	-fill green -stroke black \
+	-draw "path 'M50,10 L80,90 L50,60 \
+                     M50,10 L20,80 L50,60'" \
+	-fuzz 15% -trim +repage \
+	-channel RGB -fx 'Xi=i-w/2; Yj=j-h/2+20; 0.8*(0.5-hypot(Xi,Yj)/70.0)+0.5' \
+	\( xc:"#cccc00" xc:"#00ffff" xc:"#aaa" +append \) \
+	-clut $@
+
+
 misil.png:
 	magick xc:transparent -geometry 100x100 \
-	-draw 'scale 0.4,0.4 \
+	-draw 'scale 0.3,0.3 \
                fill red    circle 50,50,30,50 \
                fill orange circle 50,50,35,50 \
                fill yellow circle 50,50,40,50' \

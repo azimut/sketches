@@ -58,6 +58,8 @@ class Misil:
 class Nave:
     def __init__(self):
         self.imagen = pygame.image.load("imagenes/nave.png")
+        self.imagen_izq = pygame.image.load("imagenes/nave_izq.png")
+        self.imagen_der = pygame.image.load("imagenes/nave_der.png")
         self.ancho, self.alto = self.imagen.get_size()
         self.x = ventanaH/2
         self.y = ventanaV - self.alto - 20
@@ -69,6 +71,11 @@ class Nave:
                         Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil()]
         self.disparo_delay = 0
         self.disparando = False
+        self.estado = 0 # 0 idle / 1 izquierda / 2 derecha
+    def izquierda(self):
+        self.estado = 1
+    def derecha(self):
+        self.estado = 2
     def golpear(self):
         self.salud -= 1
     def muerta(self):
@@ -76,7 +83,12 @@ class Nave:
     def mostrar(self, ventana):
         for misil in self.misiles:
             misil.mostrar(ventana)
-        ventana.blit(self.imagen, (self.x, self.y))
+        if self.estado == 0:
+            ventana.blit(self.imagen, (self.x, self.y))
+        elif self.estado == 1:
+            ventana.blit(self.imagen_izq, (self.x, self.y))
+        elif self.estado == 2:
+            ventana.blit(self.imagen_der, (self.x, self.y))
     def mover(self):
         if self.disparando:
             self.disparo_delay -= 1
@@ -87,7 +99,10 @@ class Nave:
                         misil.y = self.y - misil.alto
                         misil.x = self.x + self.ancho/2 - misil.ancho/2
                         break
-        self.x += self.velx
+        if self.estado == 1:
+            self.x -= 6
+        elif self.estado == 2:
+            self.x += 6
         self.y += self.vely
         self.x = min(max(self.x, 0), ventanaH - self.ancho)
         self.y = min(max(self.y, ventanaV/2), ventanaV - self.alto)
@@ -158,9 +173,9 @@ def main():
                 if event.key == pygame.K_SPACE:
                     nave.disparar(ventana)
                 if event.key == pygame.K_j:
-                    nave.velx -= 6
+                    nave.izquierda()
                 if event.key == pygame.K_l:
-                    nave.velx += 6
+                    nave.derecha()
                 if event.key == pygame.K_k:
                     nave.vely += 6
                 if event.key == pygame.K_i:
@@ -175,9 +190,9 @@ def main():
                 if event.key == pygame.K_k:
                     nave.vely = 0
                 if event.key == pygame.K_j:
-                    nave.velx = 0
+                    nave.estado = 0
                 if event.key == pygame.K_l:
-                    nave.velx = 0
+                    nave.estado = 0
                 if event.key == pygame.K_SPACE:
                     nave.pausa()
 
