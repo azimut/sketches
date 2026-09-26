@@ -8,7 +8,6 @@ ventanaV = 700
 negro    = (0,0,0)
 blanco   = (255,255,255)
 
-
 class Enemigo:
     def __init__(self):
         self.image = pygame.image.load("imagenes/enemigo.png")
@@ -100,9 +99,9 @@ class Nave:
                         misil.x = self.x + self.ancho/2 - misil.ancho/2
                         break
         if self.estado == 1:
-            self.x -= 6
+            self.x -= 7
         elif self.estado == 2:
-            self.x += 6
+            self.x += 7
         self.y += self.vely
         self.x = min(max(self.x, 0), ventanaH - self.ancho)
         self.y = min(max(self.y, ventanaV/2), ventanaV - self.alto)
@@ -122,9 +121,12 @@ class Estrella:
         self.accel = 0
     def mostrar(self, ventana):
         pygame.draw.rect(ventana, blanco, (self.x,self.y,self.size, self.size + self.accel))
-    def mover(self, accel):
+    def mover(self, accel, estado):
         self.accel = accel
-        # self.x = (self.x + 2*self.size*.2) % ventanaH
+        if estado == 1:
+            self.x = (self.x + 1*self.size*.2) % ventanaH
+        elif estado == 2:
+            self.x = (self.x - 1*self.size*.2) % ventanaH
         self.y = ((self.y + 2*self.size*.2)+self.accel) % ventanaV
         if self.x == 0 or self.y == 0:
             self.size = random.randint(1,4)
@@ -137,9 +139,9 @@ class Estrellas:
     def mostrar(self, ventana):
         for estrella in self.universo:
             estrella.mostrar(ventana)
-    def mover(self, accel):
+    def mover(self, accel, estado):
         for estrella in self.universo:
-            estrella.mover(accel)
+            estrella.mover(accel, estado)
 
 
 def main():
@@ -152,7 +154,7 @@ def main():
     while jugando:
         ventana.fill(negro)
         estrellas.mostrar(ventana)
-        estrellas.mover(nave.accel)
+        estrellas.mover(nave.accel, nave.estado)
         nave.mostrar(ventana)
         nave.mover()
         enemigo.mostrar(ventana)
