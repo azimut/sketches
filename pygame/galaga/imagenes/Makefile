@@ -28,7 +28,6 @@ nave_der.png:
 	\( xc:"#cccc00" xc:"#00ffff" xc:"#aaa" +append \) \
 	-clut $@
 
-
 misil.png:
 	magick xc:transparent -geometry 100x100 \
 	-draw 'scale 0.3,0.3 \

@@ -21,9 +21,14 @@ class Enemigo:
         self.x += math.sin(self.y*0.02) * 3
         self.x = min(max(self.x, 0), ventanaH - self.ancho)
         if self.y > ventanaV:
-            self.y = -self.alto -accel
-            self.x = random.randint(0,ventanaH-self.ancho)
+            self.respawn()
+    def respawn(self):
+        self.y = -self.alto
+        self.x = random.randint(0,ventanaH-self.ancho)
     def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
+        if self.y < 0 or otro.y < 0:
+            return False
+
         xc_enemigo = self.x + self.ancho/2
         yc_enemigo = self.y + self.ancho/2
         r_enemigo = self.ancho/2
@@ -39,7 +44,7 @@ class Misil:
         self.image = pygame.image.load("imagenes/misil.png")
         self.ancho, self.alto = self.image.get_size()
         self.x = -1
-        self.y = -1
+        self.y = -ventanaV
     def mover(self):
         if self.y >= 0:
             self.y -= 4
@@ -60,6 +65,8 @@ class Nave:
         self.imagen_izq = pygame.image.load("imagenes/nave_izq.png")
         self.imagen_der = pygame.image.load("imagenes/nave_der.png")
         self.ancho, self.alto = self.imagen.get_size()
+        self.sonido_misil = pygame.mixer.Sound("sonidos/misil.ogg")
+        self.sonido_boom = pygame.mixer.Sound("sonidos/boom.ogg")
         self.x = ventanaH/2
         self.y = ventanaV - self.alto - 20
         self.velx = 0
@@ -95,6 +102,7 @@ class Nave:
                 self.disparo_delay = fps / 10
                 for misil in self.misiles:
                     if misil.y < 0:
+                        self.sonido_misil.play()
                         misil.y = self.y - misil.alto
                         misil.x = self.x + self.ancho/2 - misil.ancho/2
                         break
@@ -146,6 +154,7 @@ class Estrellas:
 
 def main():
     pygame.init()
+    pygame.mixer.init()
     ventana = pygame.display.set_mode((ventanaH,ventanaV))
     estrellas = Estrellas(200)
     nave = Nave()
@@ -167,8 +176,9 @@ def main():
 
         for misil in nave.misiles:
             if enemigo.choca_con(misil):
-                misil.y = -misil.alto
-                enemigo.y = ventanaV
+                misil.y = -ventanaV
+                enemigo.respawn()
+                nave.sonido_boom.play()
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
