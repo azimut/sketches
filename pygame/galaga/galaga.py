@@ -4,9 +4,23 @@ import math
 
 fps      = 60
 ventanaV = 800
-ventanaH = round(ventanaV * 0.7)
-negro    = (0,0,0)
+ventanaH = round(ventanaV * 0.8)
+negro    = (10,10,10)
 blanco   = (255,255,255)
+
+class Chocador:
+    def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
+        if self.y < 0 or otro.y < 0:
+            return False
+        xc_enemigo = self.x + self.ancho/2
+        yc_enemigo = self.y + self.ancho/2
+        r_enemigo = self.ancho/2
+        xc_otro = otro.x + otro.ancho/2
+        yc_otro = otro.y + otro.alto/2
+        r_otro = otro.ancho/2
+        distancia = math.sqrt( (xc_otro - xc_enemigo)**2 + (yc_otro - yc_enemigo)**2)
+        distancia_bordes = distancia - (r_enemigo + r_otro)
+        return distancia_bordes <= 0
 
 class Puntaje:
     def __init__(self):
@@ -21,7 +35,7 @@ class Puntaje:
     def mostrar(self, ventana):
         ventana.blit(self.imagen, (ventanaH - self.ancho - 10, ventanaV - self.alto - 10))
 
-class Enemigo:
+class Enemigo(Chocador):
     def __init__(self):
         self.image = pygame.image.load("imagenes/enemigo.png")
         self.ancho, self.alto = self.image.get_size()
@@ -38,18 +52,6 @@ class Enemigo:
     def respawn(self):
         self.y = -self.alto
         self.x = random.randint(0,ventanaH-self.ancho)
-    def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
-        if self.y < 0 or otro.y < 0:
-            return False
-        xc_enemigo = self.x + self.ancho/2
-        yc_enemigo = self.y + self.ancho/2
-        r_enemigo = self.ancho/2
-        xc_otro = otro.x + otro.ancho/2
-        yc_otro = otro.y + otro.alto/2
-        r_otro = otro.ancho/2
-        distancia = math.sqrt( (xc_otro - xc_enemigo)**2 + (yc_otro - yc_enemigo)**2)
-        distancia_bordes = distancia - (r_enemigo + r_otro)
-        return distancia_bordes <= 0
 
 class Borracho(Enemigo):
     def mover(self, accel):
@@ -189,7 +191,7 @@ def main():
     estrellas = Estrellas(200)
     nave = Nave()
     jugando = True
-    enemigo = Firme()
+    enemigo = Borracho()
     puntaje = Puntaje()
     while jugando:
         ventana.fill(negro)
