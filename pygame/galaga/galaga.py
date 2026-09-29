@@ -101,8 +101,7 @@ class Nave:
         self.vely = 0
         self.accel = 0
         self.salud = 5
-        self.misiles = [Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),
-                        Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil(),Misil()]
+        self.misiles = [Misil() for i in range(28)]
         self.disparo_delay = 0
         self.disparando = False
         self.estado = 0 # 0 idle / 1 izquierda / 2 derecha
@@ -174,9 +173,7 @@ class Estrella:
 
 class Estrellas:
     def __init__(self, cantidad):
-        self.universo = []
-        for i in range(cantidad):
-            self.universo.append(Estrella())
+        self.universo = [Estrella() for i in range(cantidad)]
     def mostrar(self, ventana):
         for estrella in self.universo:
             estrella.mostrar(ventana)
