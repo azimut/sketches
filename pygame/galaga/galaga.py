@@ -10,11 +10,11 @@ blanco   = (255,255,255)
 
 class Puntaje:
     def __init__(self):
-        self.font = pygame.font.Font(None, 30)
+        self.font = pygame.font.Font(None, 35)
         self.puntaje = 0
         self.imagen = self.font.render(str(self.puntaje), False, blanco)
         self.ancho, self.alto = self.imagen.get_size()
-    def actualizar(self, puntaje):
+    def puntuar(self, puntaje):
         self.puntaje += puntaje
         self.imagen = self.font.render(str(self.puntaje), False, blanco)
         self.ancho, self.alto = self.imagen.get_size()
@@ -90,6 +90,8 @@ class Nave:
         self.imagen = pygame.image.load("imagenes/nave.png")
         self.imagen_izq = pygame.image.load("imagenes/nave_izq.png")
         self.imagen_der = pygame.image.load("imagenes/nave_der.png")
+        self.imagen_vida = pygame.image.load("imagenes/vida.png")
+        self.imagen_vida_ancho, self.imagen_vida_alto = self.imagen_vida.get_size()
         self.ancho, self.alto = self.imagen.get_size()
         self.sonido_misil = pygame.mixer.Sound("sonidos/misil.ogg")
         self.sonido_boom = pygame.mixer.Sound("sonidos/boom.ogg")
@@ -113,6 +115,11 @@ class Nave:
     def muerta(self):
         return self.salud == 0
     def mostrar(self, ventana):
+        margen_vida = 10
+        for i in range(self.salud):
+            ventana.blit(self.imagen_vida,
+                         (i * self.imagen_vida_ancho + margen_vida * i + margen_vida,
+                          ventanaV - self.imagen_vida_alto - margen_vida))
         for misil in self.misiles:
             misil.mostrar(ventana)
         if self.estado == 0:
@@ -196,6 +203,8 @@ def main():
         enemigo.mostrar(ventana)
         enemigo.mover(nave.accel)
         puntaje.mostrar(ventana)
+        puntaje.puntuar(1)
+
         if enemigo.choca_con(nave):
             enemigo.y = ventanaV
             nave.golpear()
@@ -206,7 +215,7 @@ def main():
             if enemigo.choca_con(misil):
                 misil.y = -ventanaV
                 enemigo.respawn()
-                puntaje.actualizar(1)
+                puntaje.puntuar(1000)
                 nave.sonido_boom.play()
 
         for event in pygame.event.get():

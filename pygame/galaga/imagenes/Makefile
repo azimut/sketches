@@ -1,3 +1,11 @@
+vida.png:
+	magick xc:transparent -geometry 100x100 \
+	-fill white \
+	-draw "scale 0.2,0.2 \
+	       path 'M50,10 L80,80 L50,60 \
+                     M50,10 L20,80 L50,60'" \
+	-fuzz 15% -trim +repage $@
+
 nave.png:
 	magick xc:transparent -geometry 100x100 \
 	-fill green -stroke black \
