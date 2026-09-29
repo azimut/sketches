@@ -7,6 +7,47 @@ ventanaV = 800
 ventanaH = round(ventanaV * 0.8)
 negro    = (10,10,10)
 blanco   = (255,255,255)
+rojo     = (255, 0, 0)
+amarillo = (255, 255, 0)
+
+class Titulo:
+    def __init__(self):
+        self.font = pygame.font.Font(None, 200)
+        self.imagen = self.font.render("Galaga", False, blanco)
+        self.ancho, self.alto = self.imagen.get_size()
+
+        self.colores = [(255,255,255),(10,10,10)]
+        self.parpadeo_indice = 0
+        self.font_start = pygame.font.Font(None, 40)
+        self.imagen_start = self.font_start.render("Pulse Espacio", False, blanco)
+        self.ancho_start, self.alto_start = self.imagen_start.get_size()
+
+    def parpadear(self):
+        self.parpadeo_indice = (self.parpadeo_indice + 1) % 100
+        self.imagen_start = self.font_start.render("Pulse Espacio", False, self.colores[self.parpadeo_indice  % 2])
+        self.ancho_start, self.alto_start = self.imagen_start.get_size()
+
+    def mostrar(self, ventana):
+        ventana.blit(pygame.transform.scale_by(self.imagen, (1,2)),
+                     (ventanaH/2 - self.ancho/2,
+                      ventanaV/2 - self.alto))
+        ventana.blit(self.imagen_start, (ventanaH/2 - self.ancho_start/2,
+                                         ventanaV*0.75 - self.alto_start/2))
+
+
+
+class Resultado:
+    def __init__(self):
+        self.font = pygame.font.Font(None, 85)
+        self.perdio()
+    def perdio(self):
+        self.imagen = self.font.render("PERDISTE", False, rojo)
+        self.ancho, self.alto = self.imagen.get_size()
+    def gano(self):
+        self.imagen = self.font.render("GANASTE", False, amarillo)
+        self.ancho, self.alto = self.imagen.get_size()
+    def mostrar(self, ventana):
+        ventana.blit(self.imagen, (ventanaH/2 - self.ancho/2, ventanaV/2 - self.alto/2))
 
 class Chocador:
     def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
@@ -21,6 +62,17 @@ class Chocador:
         distancia = math.sqrt( (xc_otro - xc_enemigo)**2 + (yc_otro - yc_enemigo)**2)
         distancia_bordes = distancia - (r_enemigo + r_otro)
         return distancia_bordes <= 0
+
+class Item(Chocador):
+    def __init__(self):
+        self.ancho = 20
+        self.alto = 20
+        self.x = random.randint(0, ventanaH - self.ancho)
+        self.y = -self.alto
+    def mostrar(self, ventana):
+        pygame.draw.rect(ventana, (0,0,255), (self.x, self.y, self.ancho, self.alto))
+    def mover(self):
+        self.y -= 1
 
 class Puntaje:
     def __init__(self):
@@ -97,12 +149,14 @@ class Nave:
         self.ancho, self.alto = self.imagen.get_size()
         self.sonido_misil = pygame.mixer.Sound("sonidos/misil.ogg")
         self.sonido_boom = pygame.mixer.Sound("sonidos/boom.ogg")
+        self.reiniciar()
+    def reiniciar(self):
         self.x = ventanaH/2
         self.y = ventanaV - self.alto - 20
         self.velx = 0
         self.vely = 0
         self.accel = 0
-        self.salud = 5
+        self.salud = 3
         self.misiles = [Misil() for i in range(28)]
         self.disparo_delay = 0
         self.disparando = False
@@ -193,60 +247,90 @@ def main():
     jugando = True
     enemigo = Borracho()
     puntaje = Puntaje()
+    titulo = Titulo()
+    resultado = Resultado()
+    estado = 0
     while jugando:
         ventana.fill(negro)
         estrellas.mostrar(ventana)
         estrellas.mover(nave.accel, nave.estado)
-        nave.mostrar(ventana)
-        nave.mover()
-        enemigo.mostrar(ventana)
-        enemigo.mover(nave.accel)
-        puntaje.mostrar(ventana)
-        puntaje.puntuar(1)
+        if estado == 0:
+            titulo.mostrar(ventana)
+            titulo.parpadear()
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        estado = 5
+                if event.type == pygame.QUIT:
+                    jugando = False
+        elif estado == 1:
+            resultado.mostrar(ventana)
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        estado = 0
+                        nave.reiniciar()
+                if event.type == pygame.QUIT:
+                    jugando = False
 
-        if enemigo.choca_con(nave):
-            enemigo.y = ventanaV
-            nave.golpear()
-        if nave.muerta():
-            jugando = False
+        elif estado == 2:
+            resultado.mostrar(ventana)
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        estado = 0
+                        nave.reiniciar()
+                if event.type == pygame.QUIT:
+                    jugando = False
+        else:
+            nave.mostrar(ventana)
+            nave.mover()
+            enemigo.mostrar(ventana)
+            enemigo.mover(nave.accel)
+            puntaje.mostrar(ventana)
+            puntaje.puntuar(1)
+            if enemigo.choca_con(nave):
+                enemigo.y = ventanaV
+                nave.golpear()
+            if nave.muerta():
+                estado = 2
+            for misil in nave.misiles:
+                if enemigo.choca_con(misil):
+                    misil.y = -ventanaV
+                    enemigo.respawn()
+                    puntaje.puntuar(1000)
+                    nave.sonido_boom.play()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    jugando = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        nave.disparar(ventana)
+                    if event.key == pygame.K_j:
+                        nave.izquierda()
+                    if event.key == pygame.K_l:
+                        nave.derecha()
+                    if event.key == pygame.K_k:
+                        nave.vely += 6
+                    if event.key == pygame.K_i:
+                        nave.vely -= 3
+                        for estrella in estrellas.universo:
+                            nave.accel = 5
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_i:
+                        nave.vely = 0
+                        for estrella in estrellas.universo:
+                            nave.accel = 0
+                    if event.key == pygame.K_k:
+                        nave.vely = 0
+                    if event.key == pygame.K_j:
+                        nave.estado = 0
+                    if event.key == pygame.K_l:
+                        nave.estado = 0
+                    if event.key == pygame.K_SPACE:
+                        nave.pausa()
 
-        for misil in nave.misiles:
-            if enemigo.choca_con(misil):
-                misil.y = -ventanaV
-                enemigo.respawn()
-                puntaje.puntuar(1000)
-                nave.sonido_boom.play()
 
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    nave.disparar(ventana)
-                if event.key == pygame.K_j:
-                    nave.izquierda()
-                if event.key == pygame.K_l:
-                    nave.derecha()
-                if event.key == pygame.K_k:
-                    nave.vely += 6
-                if event.key == pygame.K_i:
-                    nave.vely -= 3
-                    for estrella in estrellas.universo:
-                        nave.accel = 5
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_i:
-                    nave.vely = 0
-                    for estrella in estrellas.universo:
-                        nave.accel = 0
-                if event.key == pygame.K_k:
-                    nave.vely = 0
-                if event.key == pygame.K_j:
-                    nave.estado = 0
-                if event.key == pygame.K_l:
-                    nave.estado = 0
-                if event.key == pygame.K_SPACE:
-                    nave.pausa()
-
-            if event.type == pygame.QUIT:
-                jugando = False
         pygame.display.flip()
         pygame.time.Clock().tick(fps)
 
