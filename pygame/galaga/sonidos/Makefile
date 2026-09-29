@@ -1,3 +1,9 @@
+.PHONY: all
+all: misil.ogg boom.ogg misil.png boom.png
+
+%.png: %.ogg
+	sox $< -n spectrogram -o $@
+
 misil.ogg:
 	sox -b 16 -n $@ \
 	synth \
