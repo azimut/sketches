@@ -3,10 +3,23 @@ import pygame
 import math
 
 fps      = 60
-ventanaH = 700
-ventanaV = 700
+ventanaV = 800
+ventanaH = round(ventanaV * 0.7)
 negro    = (0,0,0)
 blanco   = (255,255,255)
+
+class Puntaje:
+    def __init__(self):
+        self.font = pygame.font.Font(None, 30)
+        self.puntaje = 0
+        self.imagen = self.font.render(str(self.puntaje), False, blanco)
+        self.ancho, self.alto = self.imagen.get_size()
+    def actualizar(self, puntaje):
+        self.puntaje += puntaje
+        self.imagen = self.font.render(str(self.puntaje), False, blanco)
+        self.ancho, self.alto = self.imagen.get_size()
+    def mostrar(self, ventana):
+        ventana.blit(self.imagen, (ventanaH - self.ancho - 10, ventanaV - self.alto - 10))
 
 class Enemigo:
     def __init__(self):
@@ -28,7 +41,6 @@ class Enemigo:
     def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
         if self.y < 0 or otro.y < 0:
             return False
-
         xc_enemigo = self.x + self.ancho/2
         yc_enemigo = self.y + self.ancho/2
         r_enemigo = self.ancho/2
@@ -38,6 +50,20 @@ class Enemigo:
         distancia = math.sqrt( (xc_otro - xc_enemigo)**2 + (yc_otro - yc_enemigo)**2)
         distancia_bordes = distancia - (r_enemigo + r_otro)
         return distancia_bordes <= 0
+
+class Borracho(Enemigo):
+    def mover(self, accel):
+        self.y += 2 + accel
+        self.x += math.sin(self.y*0.02) * 3
+        self.x = min(max(self.x, 0), ventanaH - self.ancho)
+        if self.y > ventanaV:
+            self.respawn()
+
+class Firme(Enemigo):
+    def mover(self, accel):
+        self.y += 2 + accel
+        if self.y > ventanaV:
+            self.respawn()
 
 class Misil:
     def __init__(self):
@@ -159,7 +185,8 @@ def main():
     estrellas = Estrellas(200)
     nave = Nave()
     jugando = True
-    enemigo = Enemigo()
+    enemigo = Firme()
+    puntaje = Puntaje()
     while jugando:
         ventana.fill(negro)
         estrellas.mostrar(ventana)
@@ -168,6 +195,7 @@ def main():
         nave.mover()
         enemigo.mostrar(ventana)
         enemigo.mover(nave.accel)
+        puntaje.mostrar(ventana)
         if enemigo.choca_con(nave):
             enemigo.y = ventanaV
             nave.golpear()
@@ -178,6 +206,7 @@ def main():
             if enemigo.choca_con(misil):
                 misil.y = -ventanaV
                 enemigo.respawn()
+                puntaje.actualizar(1)
                 nave.sonido_boom.play()
 
         for event in pygame.event.get():
