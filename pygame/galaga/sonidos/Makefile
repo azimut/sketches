@@ -15,6 +15,7 @@ misil.ogg:
 	fade q .2 1.1 .5 \
 	delay 0 1 2 3 4 \
 	remix - \
+	lowpass -2 6k 10k \
 	stretch .01 \
 	vol 1
 
