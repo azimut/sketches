@@ -75,10 +75,12 @@ class Item(Chocador):
 
 class Puntaje:
     def __init__(self):
-        self.font = pygame.font.Font(None, 35)
         self.puntaje = 0
+        self.font = pygame.font.Font(None, 35)
         self.imagen = self.font.render(str(self.puntaje), False, blanco)
         self.ancho, self.alto = self.imagen.get_size()
+    def reiniciar(self):
+        self.puntaje = 0
     def puntuar(self, puntaje):
         self.puntaje += puntaje
         self.imagen = self.font.render(str(self.puntaje), False, blanco)
@@ -254,6 +256,8 @@ def main():
         estrellas.mostrar(ventana)
         estrellas.mover(nave.accel, nave.estado)
         if estado == 0:
+            nave.reiniciar()
+            puntaje.reiniciar()
             titulo.mostrar(ventana)
             titulo.parpadear()
             for event in pygame.event.get():
@@ -278,7 +282,6 @@ def main():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
                         estado = 0
-                        nave.reiniciar()
                 if event.type == pygame.QUIT:
                     jugando = False
         else:
