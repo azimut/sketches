@@ -22,6 +22,8 @@ class Titulo:
         self.imagen_start = self.font_start.render("Pulse Espacio", False, blanco)
         self.ancho_start, self.alto_start = self.imagen_start.get_size()
 
+        self.sonido_empezar = pygame.mixer.Sound("sonidos/empezar.ogg")
+
     def parpadear(self):
         self.parpadeo_indice = (self.parpadeo_indice + 1) % 100
         self.imagen_start = self.font_start.render("Pulse Espacio", False, self.colores[self.parpadeo_indice  % 2])
@@ -263,6 +265,7 @@ def main():
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_SPACE:
+                        titulo.sonido_empezar.play()
                         estado = 5
                 if event.type == pygame.QUIT:
                     jugando = False
