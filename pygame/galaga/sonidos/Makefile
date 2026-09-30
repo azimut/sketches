@@ -1,8 +1,11 @@
 .PHONY: all
-all: misil.ogg boom.ogg misil.png boom.png
+all: misil.ogg boom.ogg misil.png boom.png misil_wave.png boom_wave.png
 
 %.png: %.ogg
 	sox $< -n spectrogram -o $@
+
+%_wave.png: %.ogg
+	sox $< -t dat - | grep -v ';' | gnuplot -e 'set monochrome; set title "$<" ; set autoscale fix; unset border; set grid; set tics scale 0; unset key; set term pngcairo ; set output "$@" ; plot "-" with lines'
 
 misil.ogg:
 	sox -b 16 -n $@ \

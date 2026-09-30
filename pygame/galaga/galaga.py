@@ -35,7 +35,6 @@ class Titulo:
                                          ventanaV*0.75 - self.alto_start/2))
 
 
-
 class Resultado:
     def __init__(self):
         self.font = pygame.font.Font(None, 85)
@@ -47,7 +46,7 @@ class Resultado:
         self.imagen = self.font.render("GANASTE", False, amarillo)
         self.ancho, self.alto = self.imagen.get_size()
     def mostrar(self, ventana):
-        ventana.blit(self.imagen, (ventanaH/2 - self.ancho/2, ventanaV/2 - self.alto/2))
+        ventana.blit(pygame.transform.scale_by(self.imagen, (1,3)), (ventanaH/2 - self.ancho/2, ventanaV/2 - self.alto))
 
 class Chocador:
     def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
