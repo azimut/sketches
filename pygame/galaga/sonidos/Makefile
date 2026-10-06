@@ -23,7 +23,7 @@ misil.ogg:
 	remix - \
 	lowpass -2 6k 10k \
 	stretch .01 \
-	vol 1
+	vol 4
 
 boom.ogg: OFFSET = 36
 boom.ogg: RKEYS  = 0 2 3 5 7 12 5 3 2 3 7 12 0 2 3 5 7 12
@@ -38,7 +38,8 @@ boom.ogg:
 	remix - \
 	pitch -100 \
 	stretch .07 \
-	chorus .9 .3 100 0.3 0.4 2.3 -t
+	chorus .9 .3 100 0.3 0.4 2.3 -t \
+	vol 3
 
 empezar.ogg: OFFSET = 12
 empezar.ogg: RKEYS  = 0 2 3 5 7 12
@@ -54,3 +55,6 @@ empezar.ogg:
 	pitch -100 \
 	stretch .1 \
 	chorus .1 .4 100 0.3 0.1 2.0 -t
+	chorus .1 .4 100 0.3 0.1 2.0 -t \
+	vol 4
+
