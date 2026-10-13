@@ -9,6 +9,8 @@ define(`mix',`((($1)*(1-($3))) + (($2)*($3)))')
 define(`smoothstep',`(tt=clamp((($3)-($1))/(($2)-($1)));tt*tt*(3-(2*tt)))')
 define(`length',`hypot($1,$2)')
 define(`distance',`hypot(($1)-($3),($2)-($4))')
+define(`map', `(($4)+((($1)-($2))/(($3)-($2)))*(($5)-($4)))')
+define(`urandom',`fract(sin($1) * 43758.5453)')
 define(`dot',`(($1)*($3) + ($2)*($4))')
 define(`clamp',
        `ifelse(`$#',`1',``clamp($1)'',
