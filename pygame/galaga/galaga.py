@@ -10,6 +10,45 @@ blanco   = (255,255,255)
 rojo     = (255, 0, 0)
 amarillo = (255, 255, 0)
 
+class Sprite:
+    def __init__(self, ruta, cols):
+        self.imagen = pygame.image.load(ruta)
+        self.ancho, self.alto = self.imagen.get_size()
+        self.cols = cols
+        self.recorte = pygame.Surface((self.ancho//self.cols, self.alto), pygame.SRCALPHA)
+        self.cuadro = 0
+        self.x = 0
+        self.y = -ventanaV
+        self.contador = 0
+        self.termino = False
+    def reiniciar(self):
+        self.cuadro = 0
+        self.x = 0
+        self.y = -ventanaV
+        self.contador = 0
+        self.termino = False
+    def animar(self):
+        if self.termino:
+            return
+        self.contador += 1
+        if self.contador > 10:
+            self.contador = 0
+            self.cuadro = (self.cuadro + 1) % self.cols
+        if self.cuadro == self.cols - 1:
+            self.termino = True
+            self.y = -10
+    def mostrar(self, ventana):
+        if self.y < 0:
+            return
+        self.recorte.fill(negro)
+        self.recorte.blit(self.imagen,(0,0),(self.ancho / self.cols * self.cuadro, 0, self.ancho//self.cols, self.alto))
+        ventana.blit(self.recorte, (self.x,self.y))
+
+class Explosion(Sprite):
+    def __init__(self):
+        super().__init__("imagenes/explosion.png", 6)
+
+
 class Titulo:
     def __init__(self):
         self.font = pygame.font.Font(None, 200)
@@ -96,7 +135,15 @@ class Enemigo(Chocador):
         self.ancho, self.alto = self.image.get_size()
         self.x = random.randint(0,ventanaH-self.ancho)
         self.y = -self.alto;
+        self.explosion = Explosion()
+    def explotar(self):
+        self.explosion.reiniciar()
+        self.explosion.x = self.x
+        self.explosion.y = self.y
     def mostrar(self, ventana):
+        if not self.explosion.termino:
+            self.explosion.animar()
+            self.explosion.mostrar(ventana)
         ventana.blit(self.image, (self.x,self.y))
     def mover(self, accel):
         self.y += 2 + accel
@@ -151,6 +198,7 @@ class Nave:
         self.imagen_vida_ancho, self.imagen_vida_alto = self.imagen_vida.get_size()
         self.ancho, self.alto = self.imagen.get_size()
         self.sonido_misil = pygame.mixer.Sound("sonidos/misil.ogg")
+        self.sonido_misil.set_volume(0.1)
         self.sonido_boom = pygame.mixer.Sound("sonidos/boom.ogg")
         self.reiniciar()
     def reiniciar(self):
@@ -278,7 +326,6 @@ def main():
                         nave.reiniciar()
                 if event.type == pygame.QUIT:
                     jugando = False
-
         elif estado == 2:
             resultado.mostrar(ventana)
             for event in pygame.event.get():
@@ -295,6 +342,7 @@ def main():
             puntaje.mostrar(ventana)
             puntaje.puntuar(1)
             if enemigo.choca_con(nave):
+                enemigo.explotar()
                 enemigo.y = ventanaV
                 nave.golpear()
             if nave.muerta():
@@ -302,6 +350,7 @@ def main():
             for misil in nave.misiles:
                 if enemigo.choca_con(misil):
                     misil.y = -ventanaV
+                    enemigo.explotar()
                     enemigo.respawn()
                     puntaje.puntuar(1000)
                     nave.sonido_boom.play()
