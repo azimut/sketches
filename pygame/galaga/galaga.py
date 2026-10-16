@@ -10,6 +10,27 @@ blanco   = (255,255,255)
 rojo     = (255, 0, 0)
 amarillo = (255, 255, 0)
 
+class Planeta:
+    def __init__(self):
+        self.original = pygame.image.load("imagenes/planeta.png").convert_alpha()
+        self.ancho, self.alto = self.original.get_size()
+        self.imagen = pygame.Surface((self.ancho, self.alto), pygame.SRCALPHA)
+        self.reiniciar()
+    def reiniciar(self):
+        self.color = (random.randint(1,255),random.randint(1,255),random.randint(1,255))
+        self.scala = random.randint(1,5)
+        self.x = random.randint(-self.ancho//2, self.ancho//2)
+        self.y = -self.alto*self.scala*2
+        self.imagen.blit(self.original, (0,0))
+        self.imagen.fill(self.color, special_flags=pygame.BLEND_ADD)
+    def mover(self, accel, _estado):
+        self.y += 1 + accel*0.1
+        if self.y > ventanaV*2:
+            self.reiniciar()
+    def mostrar(self, ventana):
+        ventana.blit(pygame.transform.scale_by(self.imagen, (self.scala,self.scala)), (self.x, self.y))
+
+
 class Sprite:
     def __init__(self, ruta, cols):
         self.imagen = pygame.image.load(ruta)
@@ -281,6 +302,7 @@ class Estrella:
 class Estrellas:
     def __init__(self, cantidad):
         self.universo = [Estrella() for i in range(cantidad)]
+        self.universo.append(Planeta())
     def mostrar(self, ventana):
         for estrella in self.universo:
             estrella.mostrar(ventana)
