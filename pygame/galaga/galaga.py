@@ -61,7 +61,7 @@ class Sprite:
     def mostrar(self, ventana):
         if self.y < 0:
             return
-        self.recorte.fill(negro)
+        self.recorte.fill((0,0,0,0))
         self.recorte.blit(self.imagen,(0,0),(self.ancho / self.cols * self.cuadro, 0, self.ancho//self.cols, self.alto))
         ventana.blit(self.recorte, (self.x,self.y))
 
@@ -192,7 +192,7 @@ class Firme(Enemigo):
 
 class Misil:
     def __init__(self):
-        self.image = pygame.image.load("imagenes/misil.png")
+        self.image = pygame.image.load("imagenes/misil.png").convert_alpha()
         self.ancho, self.alto = self.image.get_size()
         self.x = -1
         self.y = -ventanaV
