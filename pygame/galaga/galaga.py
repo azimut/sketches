@@ -287,9 +287,16 @@ class Estrella:
         self.y = random.randint(0,ventanaV)
         self.size = random.randint(0, 4)
         self.accel = 0
+        self.contador = random.randint(400,900)
     def mostrar(self, ventana):
-        pygame.draw.rect(ventana, blanco, (self.x,self.y,self.size, self.size + self.accel))
+        color = blanco
+        if self.contador < 0:
+            color = negro
+        if self.contador < -fps:
+            self.contador = random.randint(400,900)
+        pygame.draw.rect(ventana, color, (self.x,self.y,self.size, self.size + self.accel))
     def mover(self, accel, estado):
+        self.contador -= 1
         self.accel = accel
         if estado == 1:
             self.x = (self.x + 1*self.size*.2) % ventanaH
