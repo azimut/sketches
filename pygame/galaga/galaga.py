@@ -22,9 +22,9 @@ class Planeta:
         self.x = random.randint(-self.ancho//2, self.ancho//2)
         self.y = -self.alto*self.scala*2
         self.imagen.blit(self.original, (0,0))
-        self.imagen.fill(self.color, special_flags=pygame.BLEND_ADD)
+        self.imagen.fill(self.color, special_flags=pygame.BLEND_MULT)
     def mover(self, accel, _estado):
-        self.y += 1 + accel*0.1
+        self.y += 1 + accel*0.2
         if self.y > ventanaV*2:
             self.reiniciar()
     def mostrar(self, ventana):
