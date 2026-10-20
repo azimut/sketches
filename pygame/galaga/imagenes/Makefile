@@ -46,7 +46,7 @@ misil.png:
 
 enemigo.png:
 	magick xc:transparent -geometry 100x100 \
-	-draw 'fill purple polygon 40,50 50,20 60,50 50,80 \
+	-draw 'fill white  polygon 40,50 50,20 60,50 50,80 \
                            polygon 30,50 35,35 40,50 35,60 \
                            polygon 60,50 65,35 70,50 65,60' \
 	-fuzz 15% -trim +repage $@
