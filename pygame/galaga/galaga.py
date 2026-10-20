@@ -10,6 +10,53 @@ blanco   = (255,255,255)
 rojo     = (255, 0, 0)
 amarillo = (255, 255, 0)
 
+class Spawner:
+    def __init__(self):
+        self.queue = [(Borracho, lambda: 5, lambda: random.randint(0,ventanaH-60), lambda: -50),
+                      (Firme   , lambda: 3, lambda: random.randint(0,ventanaH-60), lambda: -50),
+                      (Sideway , lambda: 3, lambda: -50                          , lambda: random.randint(0,ventanaH//4))]
+        self.queue_index = 0
+        self.spawn = []
+        self.waiting = False
+        self.contador = 0
+        self.currentx = self.queue[self.queue_index][2]()
+        self.currenty = self.queue[self.queue_index][3]()
+        self.currentcolor = (random.randint(0,254), random.randint(0,254), random.randint(0,254))
+    def alivep(self):
+        for spawn in self.spawn:
+            if spawn.life > 0:
+                return True
+        return False
+    def breed(self):
+        if self.waiting and self.alivep():
+            return
+        if self.waiting and not self.alivep():
+            self.spawn = []
+            self.waiting = False
+        # spawn one, every nth seconds, until 10 spawned, then wait
+        size = len(self.spawn)
+        if size < 5:
+            self.contador += 1
+            if self.contador == 25:
+                self.contador = 0
+                self.spawn.append(self.queue[self.queue_index][0](self.currentx, self.currenty))
+        elif size == 5:
+            self.queue_index = (self.queue_index + 1) % len(self.queue)
+            self.currentx = self.queue[self.queue_index][2]()
+            self.currenty = self.queue[self.queue_index][3]()
+            self.waiting = True
+    def choca_con(self, otro):
+        for spawn in self.spawn:
+            if spawn.choca_con(otro):
+                return True
+        return False
+    def mover(self, accel):
+        for spawn in self.spawn:
+            spawn.mover(accel)
+    def mostrar(self, ventana):
+        for spawn in self.spawn:
+            spawn.mostrar(ventana)
+
 class Planeta:
     def __init__(self):
         self.original = pygame.image.load("imagenes/planeta.png").convert_alpha()
@@ -151,12 +198,20 @@ class Puntaje:
         ventana.blit(self.imagen, (ventanaH - self.ancho - 10, ventanaV - self.alto - 10))
 
 class Enemigo(Chocador):
-    def __init__(self):
+    def __init__(self, x, y):
         self.image = pygame.image.load("imagenes/enemigo.png")
         self.ancho, self.alto = self.image.get_size()
-        self.x = random.randint(0,ventanaH-self.ancho)
-        self.y = -self.alto;
+        self.x = x # random.randint(0,ventanaH-self.ancho)
+        self.y = y # -self.alto;
         self.explosion = Explosion()
+        self.life = 1
+    def choca_con(self, otro):
+        choco = super().choca_con(otro)
+        if choco:
+            self.y = ventanaV
+            self.explotar()
+            self.life -= 1
+        return choco
     def explotar(self):
         self.explosion.reiniciar()
         self.explosion.x = self.x
@@ -171,7 +226,8 @@ class Enemigo(Chocador):
         self.x += math.sin(self.y*0.02) * 3
         self.x = min(max(self.x, 0), ventanaH - self.ancho)
         if self.y > ventanaV:
-            self.respawn()
+            #self.respawn()
+            self.life = 0
     def respawn(self):
         self.y = -self.alto
         self.x = random.randint(0,ventanaH-self.ancho)
@@ -179,16 +235,25 @@ class Enemigo(Chocador):
 class Borracho(Enemigo):
     def mover(self, accel):
         self.y += 2 + accel
-        self.x += math.sin(self.y*0.02) * 3
+        self.x += math.sin(self.y*0.02) * 2
         self.x = min(max(self.x, 0), ventanaH - self.ancho)
         if self.y > ventanaV:
-            self.respawn()
+            #self.respawn()
+            self.life = 0
 
 class Firme(Enemigo):
     def mover(self, accel):
         self.y += 2 + accel
         if self.y > ventanaV:
-            self.respawn()
+            #self.respawn()
+            self.life = 0
+
+class Sideway(Enemigo):
+    def mover(self, _accel):
+        self.x += 2
+        if self.x > ventanaH:
+            #self.respawn()
+            self.life = 0
 
 class Misil:
     def __init__(self):
@@ -325,11 +390,11 @@ def main():
     estrellas = Estrellas(200)
     nave = Nave()
     jugando = True
-    enemigo = Borracho()
     puntaje = Puntaje()
     titulo = Titulo()
     resultado = Resultado()
     estado = 0
+    spawner = Spawner()
     while jugando:
         ventana.fill(negro)
         estrellas.mostrar(ventana)
@@ -366,21 +431,19 @@ def main():
         else:
             nave.mostrar(ventana)
             nave.mover()
-            enemigo.mostrar(ventana)
-            enemigo.mover(nave.accel)
+            spawner.mostrar(ventana)
+            spawner.breed()
+            spawner.mover(nave.accel)
             puntaje.mostrar(ventana)
             puntaje.puntuar(1)
-            if enemigo.choca_con(nave):
-                enemigo.explotar()
-                enemigo.y = ventanaV
+            if spawner.choca_con(nave):
                 nave.golpear()
+                nave.sonido_crash.play()
             if nave.muerta():
                 estado = 2
             for misil in nave.misiles:
-                if enemigo.choca_con(misil):
+                if spawner.choca_con(misil):
                     misil.y = -ventanaV
-                    enemigo.explotar()
-                    enemigo.respawn()
                     puntaje.puntuar(1000)
                     nave.sonido_boom.play()
             for event in pygame.event.get():
