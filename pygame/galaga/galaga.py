@@ -161,14 +161,14 @@ class Chocador:
     def choca_con(self, otro): # otro.ancho otro.alto otro.x otro.y
         if self.y < 0 or otro.y < 0:
             return False
-        xc_enemigo = self.x + self.ancho/2
-        yc_enemigo = self.y + self.ancho/2
-        r_enemigo = self.ancho/2
+        xc_self = self.x + self.ancho/2
+        yc_self = self.y + self.ancho/2
+        r_self = self.ancho/2
         xc_otro = otro.x + otro.ancho/2
         yc_otro = otro.y + otro.alto/2
         r_otro = otro.ancho/2
-        distancia = math.sqrt( (xc_otro - xc_enemigo)**2 + (yc_otro - yc_enemigo)**2)
-        distancia_bordes = distancia - (r_enemigo + r_otro)
+        distancia = math.sqrt( (xc_otro - xc_self)**2 + (yc_otro - yc_self)**2)
+        distancia_bordes = distancia - (r_self + r_otro)
         return distancia_bordes <= 0
 
 class Item(Chocador):
