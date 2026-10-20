@@ -214,9 +214,9 @@ class Enemigo(Chocador):
     def choca_con(self, otro):
         choco = super().choca_con(otro)
         if choco:
-            self.y = ventanaV
             self.explotar()
             self.life -= 1
+            self.y = ventanaV
         return choco
     def explotar(self):
         self.explosion.reiniciar()
