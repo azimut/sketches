@@ -12,17 +12,17 @@ amarillo = (255, 255, 0)
 
 class Spawner:
     def __init__(self):
-        self.queue = [(Borracho , lambda: 5, lambda: random.randint(0,ventanaH-60), lambda: -50                          , lambda: (124,0,0)),
+        self.queue = [(Borracho , lambda: 4, lambda: random.randint(0,ventanaH-60), lambda: -50                          , lambda: (124,0,0)),
                       (Firme    , lambda: 3, lambda: random.randint(0,ventanaH-60), lambda: -50                          , lambda: (0,124,0)),
-                      (Sideway  , lambda: 3, lambda: -50                          , lambda: random.randint(0,ventanaH//4), lambda: (100,0,124)),
-                      (RSideway , lambda: 3, lambda: ventanaV + 50                , lambda: random.randint(0,ventanaH//4), lambda: (100,0,124))]
-        self.queue_index = 0
-        self.spawn = []
-        self.waiting = False
-        self.contador = 0
+                      (Sideway  , lambda: 4, lambda: -50                          , lambda: random.randint(0,ventanaH//4), lambda: (100,0,124)),
+                      (RSideway , lambda: 4, lambda: ventanaV + 50                , lambda: random.randint(0,ventanaH//4), lambda: (100,0,124))]
+        self.queue_index  = 0
+        self.spawn        = []
+        self.waiting      = False
+        self.contador     = 0
         self.currentcount = self.queue[self.queue_index][1]()
-        self.currentx = self.queue[self.queue_index][2]()
-        self.currenty = self.queue[self.queue_index][3]()
+        self.currentx     = self.queue[self.queue_index][2]()
+        self.currenty     = self.queue[self.queue_index][3]()
         self.currentcolor = self.queue[self.queue_index][4]()
     def alivep(self):
         for spawn in self.spawn:
