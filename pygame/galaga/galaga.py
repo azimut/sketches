@@ -286,6 +286,7 @@ class Nave:
         self.sonido_misil = pygame.mixer.Sound("sonidos/misil.ogg")
         self.sonido_misil.set_volume(0.1)
         self.sonido_boom = pygame.mixer.Sound("sonidos/boom.ogg")
+        self.sonido_crash = pygame.mixer.Sound("sonidos/crash.ogg")
         self.reiniciar()
     def reiniciar(self):
         self.x = ventanaH/2
