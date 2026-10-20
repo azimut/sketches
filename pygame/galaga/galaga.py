@@ -12,16 +12,18 @@ amarillo = (255, 255, 0)
 
 class Spawner:
     def __init__(self):
-        self.queue = [(Borracho, lambda: 5, lambda: random.randint(0,ventanaH-60), lambda: -50),
-                      (Firme   , lambda: 3, lambda: random.randint(0,ventanaH-60), lambda: -50),
-                      (Sideway , lambda: 3, lambda: -50                          , lambda: random.randint(0,ventanaH//4))]
+        self.queue = [(Borracho , lambda: 5, lambda: random.randint(0,ventanaH-60), lambda: -50                          , lambda: (124,0,0)),
+                      (Firme    , lambda: 3, lambda: random.randint(0,ventanaH-60), lambda: -50                          , lambda: (0,124,0)),
+                      (Sideway  , lambda: 3, lambda: -50                          , lambda: random.randint(0,ventanaH//4), lambda: (100,0,124)),
+                      (RSideway , lambda: 3, lambda: ventanaV + 50                , lambda: random.randint(0,ventanaH//4), lambda: (100,0,124))]
         self.queue_index = 0
         self.spawn = []
         self.waiting = False
         self.contador = 0
+        self.currentcount = self.queue[self.queue_index][1]()
         self.currentx = self.queue[self.queue_index][2]()
         self.currenty = self.queue[self.queue_index][3]()
-        self.currentcolor = (random.randint(0,254), random.randint(0,254), random.randint(0,254))
+        self.currentcolor = self.queue[self.queue_index][4]()
     def alivep(self):
         for spawn in self.spawn:
             if spawn.life > 0:
@@ -35,15 +37,17 @@ class Spawner:
             self.waiting = False
         # spawn one, every nth seconds, until 10 spawned, then wait
         size = len(self.spawn)
-        if size < 5:
+        if size < self.currentcount:
             self.contador += 1
             if self.contador == 25:
                 self.contador = 0
-                self.spawn.append(self.queue[self.queue_index][0](self.currentx, self.currenty))
-        elif size == 5:
+                self.spawn.append(self.queue[self.queue_index][0](self.currentx, self.currenty, self.currentcolor))
+        elif size == self.currentcount:
             self.queue_index = (self.queue_index + 1) % len(self.queue)
+            self.currentcount = self.queue[self.queue_index][1]()
             self.currentx = self.queue[self.queue_index][2]()
             self.currenty = self.queue[self.queue_index][3]()
+            self.currentcolor = self.queue[self.queue_index][4]()
             self.waiting = True
     def choca_con(self, otro):
         for spawn in self.spawn:
@@ -198,8 +202,10 @@ class Puntaje:
         ventana.blit(self.imagen, (ventanaH - self.ancho - 10, ventanaV - self.alto - 10))
 
 class Enemigo(Chocador):
-    def __init__(self, x, y):
+    def __init__(self, x, y, color):
+        self.color = color
         self.image = pygame.image.load("imagenes/enemigo.png")
+        self.image.fill(self.color, special_flags=pygame.BLEND_MULT)
         self.ancho, self.alto = self.image.get_size()
         self.x = x # random.randint(0,ventanaH-self.ancho)
         self.y = y # -self.alto;
@@ -252,6 +258,13 @@ class Sideway(Enemigo):
     def mover(self, _accel):
         self.x += 2
         if self.x > ventanaH:
+            #self.respawn()
+            self.life = 0
+
+class RSideway(Enemigo):
+    def mover(self, _accel):
+        self.x -= 2
+        if self.x < -self.ancho:
             #self.respawn()
             self.life = 0
 
