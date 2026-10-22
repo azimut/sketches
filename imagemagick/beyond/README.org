@@ -11,3 +11,7 @@ Experiments trying to recreate [[https://archive.org/details/beyondphotograph00h
 - giftsh - https://speakerdeck.com/ajstarks/giftsh-a-dsl-and-shell-for-image-editing
 - https://books.openedition.org/pupo/32089
 - https://www.unocero.com/noticias/88395/
+
+** Note for Emacs users
+
+- Use =sh-execute-region= with =C-M-x=, on Emacs, to execute a command that you will like visualized.
