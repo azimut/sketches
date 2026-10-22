@@ -44,3 +44,4 @@ These are some visual sketches I made while learning about digital art.
 
 - [Nature of Code](https://natureofcode.com/)
 - [PixelSpirit Elements Deck](https://pixelspiritdeck.com/)
+- [Beyond Photography](https://spinroot.com/pico/)
