@@ -1,0 +1,13 @@
+* Beyond Photography
+
+Experiments trying to recreate [[https://archive.org/details/beyondphotograph00holz/page/n1/mode/2up][Beyond Photography]] examples of image editing using pixel by pixel algorithms.
+
+** References
+
+- C - https://github.com/jrk/popi/tree/main/sw/src
+- C - https://speakerdeck.com/ajstarks/interactive-image-manipulation-with-popi
+- GLSL - https://github.com/Bentleyj/BeyondPhotography
+- Python - https://github.com/Pikecillo/darko
+- giftsh - https://speakerdeck.com/ajstarks/giftsh-a-dsl-and-shell-for-image-editing
+- https://books.openedition.org/pupo/32089
+- https://www.unocero.com/noticias/88395/
