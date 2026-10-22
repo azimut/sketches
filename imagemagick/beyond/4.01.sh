@@ -7,4 +7,4 @@ magick LOGO: -fx "
     aa = atan2(jj,ii);
     p{ cos(aa)*sqrt(rr*400)+w/2,
        sin(aa)*sqrt(rr*300)+h/2 }" \
-       out.png
+       show:

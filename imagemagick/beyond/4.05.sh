@@ -8,4 +8,4 @@ magick LOGO: -gravity Center -crop 1:1+100+0 -fx "
     offset  = offset - 1;
     above   = p{i,offset};
     current = (above < current + 0.01) ? above : current);
-  current" out.png
+  current" show:

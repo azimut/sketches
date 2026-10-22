@@ -17,7 +17,7 @@
 #   factor = (dt-(i-dt)*(i-dt) - (j-dt)*(j-dt));
 #   aa = int(p{i,j}.lightness*w);
 #   bb = int(p{i,j}.lightness*factor*h);
-#   (((aa|bb)&(~(aa&bb))))/w" out.png
+#   (((aa|bb)&(~(aa&bb))))/w" show:
 
 # 4.12 - new [x , y] = ava[ x + sin(C1∗x )∗C2 , y + sin(y)∗C3 ]
 # 4.14 - new [r , a] = psl[(r ∗r )/R , a]
