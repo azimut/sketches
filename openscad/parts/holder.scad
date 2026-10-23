@@ -55,7 +55,9 @@ module holder (rr=radius_right,rl=radius_left,error = 0) {
   }
 }
 
-function holder_silloute (thickness = 10, etop, ebot, ltop, lbot, r, rtop, rbot, angle, frame, error = 0) =
+function holder_silloute (thickness = 10,
+                          etop, ebot, ltop, lbot, r,
+                          rtop, rbot, angle, frame, error = 0) =
   let (delta  = ((thickness * 2 + frame.z) / tan(angle)))
   [[0                , 0                     , 0],
    [0                , frame.z               , 0],
