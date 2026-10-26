@@ -9,7 +9,7 @@ HEIGHT        ?= 720
 all: stl pov
 stl: dpad.stl
 pov: dpad.pov
-clean:; rm -vf *.pov *.stl *.png *.mp4
+clean:; rm -vf *.pov *.stl *.png *.mp4 *.pov-state
 
 define common-patch-pov-steps
         echo '#include "colors.inc"\nbackground {Gray}'    >> $@
