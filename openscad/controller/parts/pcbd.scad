@@ -2,9 +2,9 @@ include <BOSL2/std.scad>
 include <./switch.scad>
 
 pcbd = [30,33,1.6];
+pcbd_l = [9.3,9.9,pcbd.z];
 
 module pcbd(dt=0) {
-  pcbd_l = [9.3,9.9,pcbd.z];
   pcbd_real = pcbd + [dt,dt,0];
   color("green") {
     move([pcbd.x/2 + pcbd_l.x/2,

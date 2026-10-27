@@ -1,86 +1,52 @@
 include <BOSL2/std.scad>
+
 include <./parts/buttonh.scad>
+include <./parts/buttond.scad>
 include <./parts/pcbd.scad>
+include <./parts/pcbo.scad>
 
-body_size = 56;
-body_rounding = 10;
-body = [body_size,body_size,14.6];
+body_rounding = 15;
+body = [100,50,3];
+xseparation = 22;
+yseparation = pcbd_l.y/2;
 
-wedge_height = 6;
-wedge_thickness = 3;
-atras_wall_thickness = 3;
-atras_pocket_height = atras_wall_thickness + 2;
-outer_wedge_thickness = 2;
-
-module atras(dt=0) {
-  difference() {
-    // base
-    cuboid([body_size,
-            body_size,
-            atras_wall_thickness + atras_pocket_height],
-           rounding=body_rounding, edges="Z", anchor=BOTTOM)
-      position(TOP)
-      // wedge
-      cuboid(size=[body_size - outer_wedge_thickness*2 + dt,
-                   body_size - outer_wedge_thickness*2 + dt,
-                   wedge_height + dt],
-             rounding=body_rounding,
-             edges="Z",
-             anchor=BOTTOM);
-    // pocket - aka wedge cutout
-    up(atras_wall_thickness + 0.02)
-      cuboid(size=[body_size - outer_wedge_thickness*2 - wedge_thickness*2 + dt,
-                   body_size - outer_wedge_thickness*2 - wedge_thickness*2 + dt,
-                   wedge_height + 5 + dt],
-             rounding=body_rounding,
-             edges="Z",
-             anchor=BOTTOM);
-  }
+module 2buttons(pad_middle = 0.1, dt=0, zoff=0) {
+  left(buttonh.x/2  + pad_middle) buttonh(dt);
+  right(buttonh.x/2 + pad_middle) buttonh(dt);
 }
-
-frente();
-//pcb();
-//atras(dt=-0.2);
- up(14-10/2) up(body.z) yrot(180)  atras();
-
-module frente() {
-  difference() {
-    intersection() {
-      difference() {
-        cuboid(body, anchor=BOTTOM, rounding=body_rounding, edges="Z");
-        zscale(20) buttons(pad_middle=-0.01, dt=0.3);
-        up(3)
-          cuboid([buttonh.x*2+4,buttonh.y+4,13],
-                 anchor=BOTTOM,
-                 rounding=1,
-                 edges="Z");
-      }
-      difference() {
-        cuboid(body, anchor=BOTTOM, chamfer=2, edges=BOTTOM);
-        zscale(20) buttons(pad_middle=-0.01, dt=0.3);
-        up(3)
-          cuboid([buttonh.x*2+4,buttonh.y+4,13],
-                 anchor=BOTTOM,
-                 rounding=1,
-                 edges="Z");
-      }
-    }
-    pcb();
-    up(14.62)
-      rect_tube(size=body.x-2*2, wall=wedge_thickness, h=wedge_height,
-                rounding=body_rounding,
-                anchor=TOP);
-  }
-// pcb();
-// buttons(zoff=-2);
-}
-module buttons(pad_middle = 0.1, dt=0, zoff=0) {
-  up(buttonh.z - 0.001 + zoff) xrot(180) { // -2
-    left(buttonh.x/2  + pad_middle) buttonh(dt);
-    right(buttonh.x/2 + pad_middle) buttonh(dt);
-  }
-}
-module pcb() {
-  down(3.7) back(6) left(3.7) up(20) xrot(180)
+module 2pcb() {
+  back(6) left(3.2) up(1.6 + switch.z + buttond.z + 2.2) xrot(180)
     pcbd();
+}
+module 1button(dt=0) {
+  buttond(dt);
+}
+module 1pcb() {
+  back(5) right(5.4) up(1.6 + switch.z + buttond.z + 2.2) xrot(180)
+    pcbo();
+}
+
+difference() {
+  up(buttonh.z - body.z - buttonh_wedge.z) up(0.01)
+    cuboid(body, rounding=body_rounding, edges="Z", anchor=BOTTOM);
+  fwd(yseparation) {
+    right(xseparation) {
+      1button(dt=0.3);
+      1pcb();
+    }
+    left(xseparation) {
+      2buttons(dt=0.3);
+      2pcb();
+    }
+  }
+}
+fwd(yseparation) {
+  right(xseparation) {
+    1button();
+    1pcb();
+  }
+  left(xseparation) {
+    2buttons();
+    2pcb();
+  }
 }
