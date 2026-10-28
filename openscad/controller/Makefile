@@ -21,15 +21,15 @@ define common-patch-pov-steps
 endef
 
 frontside.stl: controller.scad
-	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=false -D show_pieces=false -o $@ $<
+	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=false -D show_frontside=true -D show_pieces=false -o $@ $<
 frontside.pov: controller.scad
-	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=false -D show_pieces=false -o $@ $<
+	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=false -D show_frontside=true -D show_pieces=false -o $@ $<
 	$(common-patch-pov-steps)
 
 backside.stl: controller.scad
-	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_frontside=false -D show_pieces=false -o $@ $<
+	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=true -D show_frontside=false -D show_pieces=false -o $@ $<
 backside.pov: controller.scad
-	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_frontside=false -D show_pieces=false -o $@ $<
+	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=true -D show_frontside=false -D show_pieces=false -o $@ $<
 	$(common-patch-pov-steps)
 
 %.png: %.pov; povray +Q11 +I$< +W$(WIDTH) +H$(HEIGHT) +A0.3

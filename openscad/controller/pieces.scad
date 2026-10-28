@@ -11,27 +11,27 @@ module 2buttons(pad_middle = 0.4, dt=0, zoff=0) {
   left(buttonh.x/2  + pad_middle) buttonh(dt);
   right(buttonh.x/2 + pad_middle) buttonh(dt);
 }
-module 2pcb(dt=0) {
+module 2pcb(dt=0,switches=true) {
   back(6) left(3.2) up(zpcbseparation) xrot(180)
-    pcbd(dt=dt);
+    pcbd(dt=dt,switches=switches);
 }
 module 1button(dt=0) {
   buttond(dt);
 }
-module 1pcb(dt=dt) {
+module 1pcb(dt=dt,switches=true) {
   back(5) right(5.4) up(zpcbseparation) xrot(180)
-    pcbo(dt=dt);
+    pcbo(dt=dt,switches=switches);
 }
 
-module pieces(dt=0,xsep=22,ysep=pcbd_l.y/1.8,pad_middle=0.4) {
+module pieces(dt=0,xsep=22,ysep=pcbd_l.y/1.8,pad_middle=0.4,switches=true) {
   fwd(ysep) {
     right(xsep) {
       1button(dt=dt);
-      1pcb(dt=dt);
+      1pcb(dt=dt,switches=switches);
     }
     left(xsep) {
       2buttons(dt=dt,pad_middle=pad_middle);
-      2pcb(dt=dt);
+      2pcb(dt=dt,switches=switches);
     }
   }
 }

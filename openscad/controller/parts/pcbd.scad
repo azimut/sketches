@@ -4,7 +4,7 @@ include <./switch.scad>
 pcbd = [30,33,1.6];
 pcbd_l = [9.3,9.9,pcbd.z];
 
-module pcbd(dt=0, screwside=false) {
+module pcbd(dt=0, screwside=false, switches=true) {
   pcbd_real = pcbd + [dt,dt,0];
   color("green") {
     move([pcbd_real.x/2 + pcbd_l.x/2,
@@ -26,7 +26,8 @@ module pcbd(dt=0, screwside=false) {
            rounding=1,
            edges="Z") {
       // buttons
-      position(TOP) back((pcbd_real.y/2)-(switch.y/2) - 7.4) {
+      if(switches)
+        position(TOP) back((pcbd_real.y/2)-(switch.y/2) - 7.4) {
         right((pcbd_real.x/2) - (switch.x/2) - 2)
           switch();
         right((pcbd_real.x/2) - (switch.x/2) - 2 - switch.x - 6.3)
