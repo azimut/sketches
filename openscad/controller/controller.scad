@@ -6,17 +6,16 @@ dt                   = 0.3;
 body_rounding        = 20;
 body                 = [100,50,3];
 pcbchomp             = pcbd.z - 0.1;
-body_wedge_height    = zpcbseparation - pcbchomp;//10 + 2.4;
+body_wedge_height    = zpcbseparation - pcbchomp;
 body_wedge_thickness = 2;
-zseparation          = buttonh.z - body.z - buttonh_wedge.z; // body to adjust buttons
-
+zseparation          = buttonh.z - buttonh_wedge.z - body.z; // body to adjust buttons
 
 module frontside() {
   difference() {
     // body
     up(zseparation) up(0.01) {
       // base
-      cuboid(body, rounding=body_rounding, edges="Z", anchor=BOTTOM);
+      #cuboid(body, rounding=body_rounding, edges="Z", anchor=BOTTOM);
       // wedge
       up(body.z + 0.003) {
         difference() {
@@ -31,7 +30,7 @@ module frontside() {
         }
       }
     }
-    pieces(dt=0.3);
+    pieces(dt=0.3, pad_middle=0);
   }
 }
 
@@ -50,13 +49,19 @@ module backside() {
       position(TOP)
       cuboid([body.x,body.y,3],
              rounding=body_rounding, anchor=BOTTOM, edges="Z");
+    // pcb screws
+    //down(1) pieces(dt=0.2);
     // pcb cutout
     up(pcbchomp) pieces(dt=0.2);
-    // pcb screws
-    down(1) pieces(dt=0.2);
   }
 }
 
-backside();
-frontside();
-pieces();
+show_frontside = false;
+show_backside  = true;
+show_pieces    = false;
+
+$fn = $preview ? 30 : 100;
+
+if (show_frontside) frontside();
+if (show_backside)  backside();
+if (show_pieces)    pieces(pad_middle=0.1);

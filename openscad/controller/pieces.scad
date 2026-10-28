@@ -23,14 +23,14 @@ module 1pcb(dt=dt) {
     pcbo(dt=dt);
 }
 
-module pieces(dt=0,xsep=22,ysep=pcbd_l.y/1.8) {
+module pieces(dt=0,xsep=22,ysep=pcbd_l.y/1.8,pad_middle=0.4) {
   fwd(ysep) {
     right(xsep) {
       1button(dt=dt);
       1pcb(dt=dt);
     }
     left(xsep) {
-      2buttons(dt=dt);
+      2buttons(dt=dt,pad_middle=pad_middle);
       2pcb(dt=dt);
     }
   }

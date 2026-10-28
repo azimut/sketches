@@ -1,7 +1,7 @@
 include <BOSL2/std.scad>
 buttond = [17.5,23.3,6.3];
 buttond_switch = [5,12.1,2];
-buttond_wedge = [1.4,9.4,1.75];
+buttond_wedge = [1.4,9.4,1.6];
 module buttond(dt=0) {
   color("silver")
     cuboid(buttond+[dt,dt,0],
