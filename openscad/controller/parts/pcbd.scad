@@ -10,7 +10,7 @@ module pcbd(dt=0, screwside=false, switches=true) {
     move([pcbd_real.x/2 + pcbd_l.x/2,
           pcbd_real.y/2 - pcbd_l.y/2 - 5.5,
           0])
-      cuboid(pcbd_l + [0.01,0,0],
+      cuboid(pcbd_l + [dt,dt,0],
              rounding=1,
              edges=[RIGHT+FRONT, RIGHT+BACK],
              anchor=BOTTOM) {

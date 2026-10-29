@@ -11,7 +11,7 @@ module pcbo(dt=0, screwside=false, switches=true) {
           pcbo_real.y/2 - pcbo_l.y/2 - 5.5,
           0])
       // ear
-      cuboid(pcbo_l + [0.01,0,0],
+      cuboid(pcbo_l + [dt,dt,0],
              rounding=1,
              edges=[LEFT+FRONT, LEFT+BACK],
              anchor=BOTTOM) {

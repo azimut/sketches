@@ -2,66 +2,59 @@ include <BOSL2/std.scad>
 
 include <./pieces.scad>
 
-dt                   = 0.3;
+epsilon              = 0.01;
 body_rounding        = 20;
-body                 = [100,50,3];
+body                 = [100,50,2.75];
 pcbchomp             = pcbd.z - 0.1;
-body_wedge_height    = zpcbseparation - pcbchomp;
+body_wedge_height    = zpcbseparation - pcbo.z + 0.2;
 body_wedge_thickness = 2;
 zseparation          = buttonh.z - buttonh_wedge.z - body.z; // body to adjust buttons
 
 module frontside() {
   difference() {
     // body
-    up(zseparation) up(0.01) {
-      // base
-      cuboid(body, rounding=body_rounding, edges="Z", anchor=BOTTOM);
-      // wedge
-      up(body.z + 0.003) {
-        difference() {
-          color("pink")
-            cuboid([body.x,body.y,body_wedge_height],
-                   rounding=body_rounding, edges="Z",
-                   anchor=BOTTOM);
-          cuboid([body.x-body_wedge_thickness*2,
-                  body.y-body_wedge_thickness*2,
-                  body_wedge_height*3],
-                 rounding=body_rounding, edges="Z");
-        }
-      }
-    }
+    up(zseparation)
+      snes(h=body.z+body_wedge_height, r=body.y/2+2, xsep=24);
+    // wedge cutout
+    up(zseparation + body.z + epsilon)
+      snes(h=body_wedge_height + epsilon, r=body.y/2+2 - 1.5*2, xsep=24);
+    // pieces
     pieces(dt=0.3, pad_middle=0);
   }
 }
 
 module backside() {
   difference() {
-    up(zpcbseparation-pcbchomp)
+    union() {
       // wedge
-      cuboid([body.x-body_wedge_thickness*2 - dt*2,
-              body.y-body_wedge_thickness*2 - dt*2,
-              5],
-             anchor=BOTTOM,
-             rounding=body_rounding,
-             edges="Z")
+      up(zseparation + body.z + body_wedge_height - 5)
+        snes(h=5,r=body.y/2+2 - 1.5*2 - 0.2,xsep=24);
       // base
       color("violet")
-      position(TOP)
-      cuboid([body.x,body.y,3],
-             rounding=body_rounding, anchor=BOTTOM, edges="Z");
+        up(zseparation + body.z + body_wedge_height)
+        snes(h=body.z,r=body.y/2+2,xsep=24);
+    }
     // pcb cutoutn
-    pieces(dt=0.2, switches=false);
+    pieces(dt=0.3, switches=false);
     // pcb screws
-    down(1) pieces(dt=0.2);
+    down(1) pieces(dt=0.3);
   }
 }
 
 show_frontside = true;
-show_backside  = false;
+show_backside  = true;
 show_pieces    = true;
 
 $fn = $preview ? 30 : 100;
 
 if (show_frontside) frontside();
 if (show_backside)  backside();
-if (show_pieces)    pieces(pad_middle=0.1);
+if (show_pieces)    pieces(pad_middle=0.1,dt=0);
+
+module snes(h=10,r=13,xsep=17,ratio=0.15) {
+  fwd(4) {
+    cuboid([xsep*2,r*(1-ratio)*2,h],anchor=BOTTOM);
+    back(r*ratio) left(xsep)  zcyl(r=r,h=h,anchor=BOTTOM);
+    back(r*ratio) right(xsep) zcyl(r=r,h=h,anchor=BOTTOM);
+  }
+}

@@ -23,7 +23,7 @@ module 1pcb(dt=dt,switches=true) {
     pcbo(dt=dt,switches=switches);
 }
 
-module pieces(dt=0,xsep=22,ysep=pcbd_l.y/1.8,pad_middle=0.4,switches=true) {
+module pieces(dt=0,xsep=21,ysep=pcbd_l.y/1.8,pad_middle=0.4,switches=true) {
   fwd(ysep) {
     right(xsep) {
       1button(dt=dt);
