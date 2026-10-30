@@ -5,7 +5,7 @@ include <./parts/buttond.scad>
 include <./parts/pcbd.scad>
 include <./parts/pcbo.scad>
 
-zpcbseparation = pcbo.z + switch.z + buttonh.z + buttonh_switch.z + 0.1;
+zpcbseparation = pcbo.z + switch.z + buttonh.z + buttonh_switch.z + 1;
 
 module 2buttons(pad_middle = 0.4, dt=0, zoff=0) {
   left(buttonh.x/2  + pad_middle) buttonh(dt);

@@ -19,9 +19,10 @@ module frontside() {
     up(zseparation + body.z + epsilon)
       snes(h=body_wedge_height + epsilon, r=body.y/2+2 - 1.5*2, xsep=24);
     // pieces
-    pieces(dt=0.3, pad_middle=0);
+    pieces(dt=1.5, pad_middle=0, switches=false);
   }
 }
+
 
 module backside() {
   difference() {
@@ -30,8 +31,7 @@ module backside() {
       up(zseparation + body.z + body_wedge_height - 5)
         snes(h=5,r=body.y/2+2 - 1.5*2 - 0.2,xsep=24);
       // base
-      color("violet")
-        up(zseparation + body.z + body_wedge_height)
+      up(zseparation + body.z + body_wedge_height)
         snes(h=body.z,r=body.y/2+2,xsep=24);
     }
     // pcb cutoutn
