@@ -16,8 +16,8 @@ define common-patch-pov-steps
 	sed -i    '0,/light_source/b;/light_source/d'         $@
 	sed -i -E 's/(Rad_Settings\()Radiosity_Normal,/\17,/' $@
 	sed -i -E 's/angle [0-9]+.[0-9]+/angle 92.5/'         $@
-	sed -i    's/^camera.*/camera { ultra_wide_angle look_at <-100, 40, 100>/' $@
-	sed -i    's/location.*/location <100, 50, 0>/'       $@
+	sed -i    's/^camera.*/camera { ultra_wide_angle look_at <0, 10, 0>/' $@
+	sed -i    's/location.*/location <10, -10, -70>/'       $@
 endef
 
 frontside.stl: controller.scad
@@ -30,6 +30,17 @@ backside.stl: controller.scad
 	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=true -D show_frontside=false -D show_pieces=false -o $@ $<
 backside.pov: controller.scad
 	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=true -D show_frontside=false -D show_pieces=false -o $@ $<
+	$(common-patch-pov-steps)
+
+# NOTE: These ones are for some cool (? visuals
+pieces.pov: controller.scad
+	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=false -D show_frontside=false -D show_pieces=true -o $@ $<
+	$(common-patch-pov-steps)
+almost.pov: controller.scad
+	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=true -D show_frontside=false -D show_pieces=true -o $@ $<
+	$(common-patch-pov-steps)
+controller.pov: controller.scad
+	$(OPENSCAD) $(OPENSCAD_ARGS) -D show_backside=true -D show_frontside=true -D show_pieces=true -o $@ $<
 	$(common-patch-pov-steps)
 
 %.png: %.pov; povray +Q11 +I$< +W$(WIDTH) +H$(HEIGHT) +A0.3
